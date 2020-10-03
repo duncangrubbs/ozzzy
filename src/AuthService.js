@@ -1,8 +1,7 @@
 /**
- * @file AuthService.js
- * @description Auth service to standardize and simplify all of our
- * funtionality relating to authorization.
  * @author Duncan Grubbs
+ * @description Auth middleware between a REST API and a frontend client.
+ * Stores and validates tokens, handles logging in and out.
  * @version 0.1.0
  */
 

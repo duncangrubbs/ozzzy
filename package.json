@@ -1,0 +1,9 @@
+{
+  "name": "ozzy",
+  "version": "0.1.0",
+  "description": "A lightweight API middleware",
+  "main": "index.js",
+  "repository": "https://github.com/duncangrubbs/ozzy.git",
+  "author": "Duncan Grubbs <duncan.grubbs@gmail.com>",
+  "license": "MIT"
+}

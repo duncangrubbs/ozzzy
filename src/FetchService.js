@@ -1,7 +1,6 @@
 /**
- * @file FetchService.js
- * @description Fetch service to standardize and simplify all of our API requests.
  * @author Duncan Grubbs
+ * @description Middleware between a REST API and client HTML components
  * @version 0.1.0
  */
 
@@ -10,10 +9,10 @@ import ErrorService from './ErrorService';
 
 export default class FetchService {
   /**
-   * Sends GET request to API, returning any data
-   * or erros in a promise.
-   * @param {String} url URL for the API request.
-   * @param {Boolean} authFlag Send Authorization header?
+   * Sends GET request to and endpoint
+   * Returns promise with parsed response or an HTML element for the error
+   * @param {String} url API endpoint
+   * @param {Boolean} authFlag Send Authorization Headder
    */
   static GET(url, authFlag = true) {
     const options = {
@@ -30,8 +29,8 @@ export default class FetchService {
   }
 
   /**
-   * Sends POST request to API, returning any data
-   * or erros in a promise.
+   * Sends POST request to and endpoint
+   * Returns promise with parsed response or an HTML element for the error
    * @param {String} url URL for the API request.
    * @param {Object} data Any data you want to pass to the API.
    * @param {Boolean} authFlag Send Authorization header?
@@ -41,7 +40,6 @@ export default class FetchService {
       method: 'POST',
       body: JSON.stringify({ data }),
     };
-
 
     return FetchService.fetch(
       url,
@@ -53,9 +51,9 @@ export default class FetchService {
   }
 
   /**
-   * Sends PUT request to API, returning any data
-   * or erros in a promise.
-   * @param {String} url URL for the API request.
+   * Sends PUT request to and endpoint
+   * Returns promise with parsed response or an HTML element for the error
+   * @param {String} url API endpoint
    * @param {Object} data Any data you want to pass to the API.
    * @param {Boolean} authFlag Send Authorization header?
    */
@@ -75,11 +73,31 @@ export default class FetchService {
   }
 
   /**
-   * Generic fetch method for our API.
+   * Sends DELETE request to and endpoint
+   * Returns promise with parsed response or an HTML element for the error
+   * @param {String} url API endpoint
+   * @param {Boolean} authFlag Send Authorization header?
+   */
+  static DELETE(url, authFlag = true) {
+    const options = {
+      method: 'DELETE',
+    };
+
+    return FetchService.fetch(
+      url,
+      options,
+      authFlag,
+    )
+      .then(data => Promise.resolve(data))
+      .catch(error => Promise.reject(error));
+  }
+
+  /**
+   * Generic fetch method
    * Automatically validates responses, etc.
-   * @param {String} url API URL you are calling.
-   * @param {Object} options HTTP header options.
-   * @param {Boolean} authFlag Send Authorization header to API.
+   * @param {String} url API endpoint
+   * @param {Object} options HTTP header options
+   * @param {Boolean} authFlag Send Authorization header to API
    */
   static fetch(url, options, authFlag) {
     const headers = authFlag
@@ -108,9 +126,9 @@ export default class FetchService {
 
   /**
    * Checks the status code of a given response
-   * @param {Object} response API respoonse.
-   * @returns {Boolean} If the reponse code is good
-   * (>=200, <300) or not (> 300)
+   * @param {Object} response API response
+   * @returns {Boolean} If the response code is ok, i.e.
+   * (>=200, <300), not (> 300)
    */
   static _checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
