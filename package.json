@@ -1,7 +1,7 @@
 {
   "name": "ozzy",
   "version": "0.1.0",
-  "description": "A lightweight API middleware",
+  "description": "A lightweight API middleware boilerplate",
   "main": "index.js",
   "repository": "https://github.com/duncangrubbs/ozzy.git",
   "author": "Duncan Grubbs <duncan.grubbs@gmail.com>",
