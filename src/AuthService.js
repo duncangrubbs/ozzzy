@@ -5,9 +5,7 @@
  * @version 0.1.0
  */
 
-import decode from 'jwt-decode';
-
-export default class AuthService {
+class AuthService {
   /**
    * Checks if there is a (valid) user logged in on the site.
    * @returns {Boolean} Valid user logged in.
@@ -41,7 +39,7 @@ export default class AuthService {
    * Checks if the logged in user's session is expired.
    * @param {String} token Token of logged in user.
    */
-  static isTokenExpired(token) {
+  static isTokenExpired(token, decode) {
     try {
       const decoded = decode(token);
       if (decoded.exp < Date.now() / 1000) {
@@ -92,7 +90,9 @@ export default class AuthService {
    * Gets the profile information of a logged in user from the token.
    * @returns {Object} Profile
    */
-  static getProfile() {
+  static getProfile(decode) {
     return decode(AuthService.getToken());
   }
 }
+
+module.exports = AuthService;

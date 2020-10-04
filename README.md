@@ -1,5 +1,5 @@
 # ozzy
-> A lightweight, modular, REST API interface
+> A lightweight, modular, REST API middleware
 
 ## 💻 How to Use
 1. First update the `config.js` file with the spec of your API
@@ -9,7 +9,7 @@ need to interact with a REST API
 ## 🤝 Design Principles
 1. Lightweight
 2. Easy to Use
-3. Zero Dependency
+3. Zero Dependencies
 4. Framework Agnostic
 
 ## 🔨 Contributing

@@ -4,10 +4,10 @@
  * @version 0.1.0
  */
 
-import AuthService from './AuthService';
-import ErrorService from './ErrorService';
+const AuthService = require('./AuthService');
+const ErrorService = require('./ErrorService');
 
-export default class FetchService {
+class FetchService {
   /**
    * Sends GET request to and endpoint
    * Returns promise with parsed response or an HTML element for the error
@@ -137,3 +137,5 @@ export default class FetchService {
     return false;
   }
 }
+
+module.exports = FetchService;

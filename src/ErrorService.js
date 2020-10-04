@@ -5,7 +5,7 @@
  * @version 0.1.0
  */
 
-export default class ErrorService {
+class ErrorService {
   /**
    * Parses an error and returns an HTML component
    * with the error embedded
@@ -17,3 +17,5 @@ export default class ErrorService {
     return null;
   }
 }
+
+module.exports = ErrorService;
