@@ -5,6 +5,8 @@
  * @version 0.1.0
  */
 
+const Storage = require('./Storage');
+
 class AuthService {
   /**
    * Checks if there is a (valid) user logged in on the site.
@@ -21,7 +23,6 @@ class AuthService {
 
   /**
    * Checks if there is a (admin) user logged in on the site.
-   * This is used for the admin dashboard.
    * @returns {Boolean} Admin user logged in.
    */
   static isAdmin() {
@@ -44,31 +45,31 @@ class AuthService {
       const decoded = decode(token);
       if (decoded.exp < Date.now() / 1000) {
         return true;
-      } else {
-        return false;
       }
+      return false;
     } catch (err) {
       return true;
     }
   }
 
   /**
-   * Adds or updates user token in local storage.
+   * Adds or updates user token in storage.
    * @param {String} idToken Token from API response.
    */
   static setToken(idToken) {
-    // Saves user token to localStorage
-    if (!localStorage.getItem('token')) {
-      localStorage.setItem('token', idToken);
+    const storage = new Storage(localStorage);
+    if (!storage.getItem('token')) {
+      storage.setItem('token', idToken);
     }
   }
 
   /**
-   * Gets token from local storage.
+   * Gets token from storage.
    * @returns {String} Token or null.
    */
   static getToken() {
-    let token = localStorage.getItem('token');
+    const storage = new Storage(localStorage);
+    let token = storage.getItem('token');
     if (token != null) {
       token = token.replace(/"/g, '');
       return token;
@@ -80,9 +81,10 @@ class AuthService {
    * Logs out a user.
    */
   static logout() {
-    // Clear user token and profile data from localStorage
-    localStorage.removeItem('token');
-    localStorage.removeItem('name');
+    // Clear user token and profile data from storage
+    const storage = new Storage(localStorage);
+    storage.removeItem('token');
+    storage.removeItem('name');
     window.location.reload();
   }
 

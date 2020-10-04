@@ -5,22 +5,25 @@
  */
 
 class Error extends HTMLElement {
-  constructor() {
+  constructor(error) {
     super();
 
-    this.width = '20px';
+    this.error = error;
+
+    this.width = '100%';
     this.height = '20px';
   }
 
   connectedCallback() {
     // Standard styles
-    this.style.position = 'fixed';
-    this.style.zIndex = '1000';
+    this.style.display = 'flex';
+    this.style.borderRadius = '4px';
     this.style.width = this.width;
     this.style.height = this.height;
+    this.innerText = `Error: ${this.error}`;
 
     // Styles from attributes
-    this.style.background = this.hasAttribute('color') ? this.getAttribute('color') : '#45b4f5';
+    this.style.background = this.hasAttribute('color') ? this.getAttribute('color') : 'red';
   }
 }
 

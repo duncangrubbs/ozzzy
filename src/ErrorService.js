@@ -5,6 +5,8 @@
  * @version 0.1.0
  */
 
+const Error = require('./Error');
+
 class ErrorService {
   /**
    * Parses an error and returns an HTML component
@@ -13,8 +15,7 @@ class ErrorService {
    * @returns {Object} HTML Element
    */
   static parseError(data) {
-    if (data.error) { return data.error; }
-    return null;
+    return data.error ? new Error(data.error) : new Error('Error');
   }
 }
 

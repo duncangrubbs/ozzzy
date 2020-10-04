@@ -12,20 +12,18 @@ class FetchService {
    * Sends GET request to and endpoint
    * Returns promise with parsed response or an HTML element for the error
    * @param {String} url API endpoint
-   * @param {Boolean} authFlag Send Authorization Headder
+   * @param {Boolean} authFlag Send Authorization Header
    */
   static GET(url, authFlag = true) {
-    const options = {
-      method: 'GET',
-    };
+    const options = { method: 'GET' };
 
     return FetchService.fetch(
       url,
       options,
       authFlag,
     )
-      .then(data => Promise.resolve(data))
-      .catch(error => Promise.reject(error));
+      .then((data) => Promise.resolve(data))
+      .catch((error) => Promise.reject(error));
   }
 
   /**
@@ -33,7 +31,7 @@ class FetchService {
    * Returns promise with parsed response or an HTML element for the error
    * @param {String} url URL for the API request.
    * @param {Object} data Any data you want to pass to the API.
-   * @param {Boolean} authFlag Send Authorization header?
+   * @param {Boolean} authFlag Send Authorization Header
    */
   static POST(url, data, authFlag = true) {
     const options = {
@@ -46,8 +44,8 @@ class FetchService {
       options,
       authFlag,
     )
-      .then(data => Promise.resolve(data))
-      .catch(error => Promise.reject(error));
+      .then((blob) => Promise.resolve(blob))
+      .catch((error) => Promise.reject(error));
   }
 
   /**
@@ -55,7 +53,7 @@ class FetchService {
    * Returns promise with parsed response or an HTML element for the error
    * @param {String} url API endpoint
    * @param {Object} data Any data you want to pass to the API.
-   * @param {Boolean} authFlag Send Authorization header?
+   * @param {Boolean} authFlag Send Authorization Header
    */
   static PUT(url, data, authFlag = true) {
     const options = {
@@ -68,28 +66,26 @@ class FetchService {
       options,
       authFlag,
     )
-      .then(data => Promise.resolve(data))
-      .catch(error => Promise.reject(error));
+      .then((blob) => Promise.resolve(blob))
+      .catch((error) => Promise.reject(error));
   }
 
   /**
    * Sends DELETE request to and endpoint
    * Returns promise with parsed response or an HTML element for the error
    * @param {String} url API endpoint
-   * @param {Boolean} authFlag Send Authorization header?
+   * @param {Boolean} authFlag Send Authorization Header
    */
   static DELETE(url, authFlag = true) {
-    const options = {
-      method: 'DELETE',
-    };
+    const options = { method: 'DELETE' };
 
     return FetchService.fetch(
       url,
       options,
       authFlag,
     )
-      .then(data => Promise.resolve(data))
-      .catch(error => Promise.reject(error));
+      .then((data) => Promise.resolve(data))
+      .catch((error) => Promise.reject(error));
   }
 
   /**
@@ -118,9 +114,9 @@ class FetchService {
       .then((res) => {
         if (!FetchService._checkStatus(res)) {
           return res.json()
-            .then(blob => Promise.reject(ErrorService.parseError(blob)));
+            .then((blob) => Promise.reject(ErrorService.parseError(blob)));
         }
-        return res.json().then(blob => Promise.resolve(blob.data));
+        return res.json().then((blob) => Promise.resolve(blob.data));
       });
   }
 

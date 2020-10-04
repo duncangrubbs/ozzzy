@@ -1,0 +1,11 @@
+env:
+  browser: true
+  es6: true
+extends: airbnb
+globals:
+  Atomics: readonly
+parserOptions:
+  ecmaVersion: 2018
+rules:
+  no-underscore-dangle: 0
+  key-spacing: 0
