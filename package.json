@@ -7,7 +7,7 @@
   "author": "Duncan Grubbs <duncan.grubbs@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "jest tests/*.test.js",
+    "test": "jest tests/*.test.js --env=jsdom",
     "lint": "eslint ."
   },
   "devDependencies": {

@@ -15,7 +15,7 @@ class ErrorService {
    * @returns {Object} HTML Element
    */
   static parseError(data) {
-    return data.error ? new Error(data.error) : new Error('Error');
+    return data.error ? new Error(data.error) : null;
   }
 }
 

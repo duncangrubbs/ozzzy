@@ -1,9 +1,16 @@
 # ozzy
 > A lightweight, modular, REST API middleware boilerplate
 
-Ozzy is a boilerplate for an API middleware that seamlessly connects your client-side components to your API, with configurable options and powerful features. For now tt is just a boilerplate, rather than a library, and therefore entirely configurable.
+Ozzy is a boilerplate for an API middleware that seamlessly connects your client-side components to your API, with configurable options and powerful features. For now tt is just a boilerplate, rather than a library, and therefore entirely configurable. Checkout the [blog post](https://duncangrubbs.surge.sh/blog/oct012020)
+about the inspiration and goals behind the project.
 
 With the minimum amount of configuration, it provides smooth error handling provided API responses contain an `error` field when parsed as JSON. It also provides local token storage and parsing with the provider of your choice.
+
+## 🤝 Design Principles
+1. Lightweight
+2. Easy to Use
+3. Zero Dependencies
+4. Framework Agnostic
 
 ## 💻 How to Use
 - The codebase is made up of a few core classes, plus a config file.
@@ -35,12 +42,5 @@ componentDidMount() {
 // ...
 ```
 
-## 🤝 Design Principles
-1. Lightweight
-2. Easy to Use
-3. Zero Dependencies
-4. Framework Agnostic
-
 ## 🔨 Contributing
-Feel free to fork and make PRs, they are always welcome! Also checkout the [blog post](https://duncangrubbs.surge.sh/blog/oct012020)
-about the inspiration and goals behind the project.
+Feel free to fork and make PRs, they are always welcome!
