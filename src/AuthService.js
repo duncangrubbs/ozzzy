@@ -1,7 +1,7 @@
 /**
  * @author Duncan Grubbs
- * @description Auth middleware between a REST API and a frontend client.
- * Stores and validates tokens, handles logging in and out.
+ * @description Auth middleware between a REST API and a frontend client
+ * Stores and validates tokens, handles logging in and out
  * @version 0.1.0
  */
 
