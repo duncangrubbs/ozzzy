@@ -9,7 +9,7 @@ With the minimum amount of configuration, it provides smooth error handling prov
 ## 🤝 Design Principles
 1. Lightweight -- _Keep it small, why not?_
 2. Easy to Use -- _Simple, straightforward, well-documented functions_
-3. Zero Dependencies -- _Beyond the test suite, there are no dependencies, so you can get up and running fast in any project_
+3. Zero Dependency -- _Beyond the test suite, there are no dependencies, so you can get up and running fast in any project_
 4. Framework Agnostic -- _Since this is written in vanilla JS, there is no framework dependency_
 
 ## 💻 Codebase
