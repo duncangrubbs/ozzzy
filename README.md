@@ -1,3 +1,4 @@
+![CI](https://github.com/duncangrubbs/ozzy/workflows/CI/badge.svg?event=push)
 # ozzy
 > A lightweight, modular, REST API middleware boilerplate
 
