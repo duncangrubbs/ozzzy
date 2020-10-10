@@ -112,7 +112,7 @@ class API {
       ...options,
     })
       .then((res) => {
-        if (!API._checkStatus(res)) {
+        if (!API.checkStatus(res)) {
           return res.json()
             .then((blob) => Promise.reject(ErrorService.parseError(blob)));
         }
@@ -126,7 +126,7 @@ class API {
    * @returns {Boolean} If the response code is ok, i.e.
    * (>=200, <300), not (> 300)
    */
-  static _checkStatus(response) {
+  static checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
       return true;
     }

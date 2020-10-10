@@ -4,6 +4,8 @@
  * @version 0.1.0
  */
 
+const { storageProvider } = require('./constants');
+
 class Storage {
   /**
    * Persists an item in local storage under the key
@@ -11,7 +13,7 @@ class Storage {
    * @param {String} value Store value
    */
   static setItem(key, value) {
-    return localStorage.setItem(key, value);
+    return storageProvider.setItem(key, value);
   }
 
   /**
@@ -19,7 +21,7 @@ class Storage {
    * @param {String} key Store key
    */
   static getItem(key) {
-    return localStorage.getItem(key);
+    return storageProvider.getItem(key);
   }
 
   /**
@@ -27,7 +29,7 @@ class Storage {
    * @param {String} key Store key
    */
   static removeItem(key) {
-    return localStorage.removeItem(key);
+    return storageProvider.removeItem(key);
   }
 }
 

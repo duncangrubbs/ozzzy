@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "test": "jest tests/*.test.js --env=jsdom",
-    "coverage": "jest tests/*.test.js --env=jsdom --coverage",
+    "coverage": "jest tests/*.test.js --env=jsdom --coverage && open ./coverage/lcov-report/index.html",
     "lint": "eslint ."
   },
   "devDependencies": {

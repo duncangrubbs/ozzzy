@@ -23,13 +23,16 @@ With the minimum amount of configuration, it provides smooth error handling and 
   - `Error.js` -- Builds and styles the error component
     - Can be modified to style the error component that is returned
   - `Storage.js` -- Storage provider abstraction, depending on what provider you use, you will need to update this. (Redux, localStorage, etc.)
-    - Abstracts away the persistant storage mechanism, so it can be easily updated
+    - Abstracts away the persistant storage mechanism, so it can be easily updated globally
+  - `TokenService.js` -- Token parser abstraction, depending on what library you use, you will need to update this. (JWT, etc.)
+    - Abstracts away the token parsing mechanism, so it can be easily updated globally
   - `constants.js` -- Basic constant declarations, and other options
 - You should read through the code and at least update `constants.js` to fit with your API
 
 ### API Usage
 ```javascript
-const API = require('./API');
+const { BASE_API_URL } = require('../ozzy/constants');
+const API = require('../ozzy/API');
 
 // ...
 
@@ -49,8 +52,9 @@ function fetchData() {
 
 ### AuthService Usage
 ```javascript
-const AuthService = require('./AuthService');
-const API = require('./API');
+const { BASE_API_URL } = require('../ozzy/constants');
+const AuthService = require('../ozzy/AuthService');
+const API = require('../ozzy/API');
 
 // ...
 

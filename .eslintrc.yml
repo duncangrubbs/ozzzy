@@ -6,6 +6,3 @@ globals:
   Atomics: readonly
 parserOptions:
   ecmaVersion: 2018
-rules:
-  no-underscore-dangle: 0
-  key-spacing: 0

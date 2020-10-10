@@ -5,7 +5,7 @@
  */
 
 const storageProvider = localStorage;
-const tokenParser = null;
+const tokenParser = jwt; // eslint-disable-line
 const BASE_API_URL = 'https://example.com/api';
 const API_VERSION = 'v0';
 
