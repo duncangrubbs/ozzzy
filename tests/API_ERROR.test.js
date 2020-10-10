@@ -1,4 +1,4 @@
-const FetchService = require('../src/FetchService');
+const API = require('../src/API');
 
 global.fetch = jest.fn(() =>
   Promise.resolve({
@@ -12,7 +12,7 @@ beforeEach(() => {
 });
 
 test('makes GET request and handles 400', () => {
-  FetchService.GET('https://www.w.com')
+  API.GET('https://www.w.com')
     .catch((error) => {
       expect(error).not.toBe(null);
     })
@@ -21,7 +21,7 @@ test('makes GET request and handles 400', () => {
 });
 
 test('makes POST request and handles 400', () => {
-  FetchService.POST('https://www.w.com')
+  API.POST('https://www.w.com')
     .catch((error) => {
       expect(error).not.toBe(null);
     })
@@ -31,7 +31,7 @@ test('makes POST request and handles 400', () => {
 
 
 test('makes PUT request and handles 400', () => {
-  FetchService.PUT('https://www.w.com')
+  API.PUT('https://www.w.com')
     .catch((error) => {
       expect(error).not.toBe(null);
     })
@@ -40,7 +40,7 @@ test('makes PUT request and handles 400', () => {
 });
 
 test('makes DELETE request and handles 400', () => {
-  FetchService.DELETE('https://www.w.com')
+  API.DELETE('https://www.w.com')
     .catch((error) => {
       expect(error).not.toBe(null);
     })

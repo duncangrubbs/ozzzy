@@ -10,7 +10,11 @@
  */
 function Error(errorMessage) {
   const errorElement = document.createElement('div');
-  errorElement.innerHTML = errorMessage;
+  errorElement.style.width = '100%';
+  errorElement.style.borderRadius = '4px';
+  errorElement.style.background = '#d43624';
+  errorElement.style.color = '#fff';
+  errorElement.textContent = errorMessage;
   return errorElement;
 }
 

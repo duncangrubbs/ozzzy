@@ -7,7 +7,7 @@
 const AuthService = require('./AuthService');
 const ErrorService = require('./ErrorService');
 
-class FetchService {
+class API {
   /**
    * Sends GET request to and endpoint
    * Returns promise with parsed response or an HTML element for the error
@@ -17,7 +17,7 @@ class FetchService {
   static GET(url, authFlag = true) {
     const options = { method: 'GET' };
 
-    return FetchService.fetch(
+    return API.fetch(
       url,
       options,
       authFlag,
@@ -39,7 +39,7 @@ class FetchService {
       body: JSON.stringify({ data }),
     };
 
-    return FetchService.fetch(
+    return API.fetch(
       url,
       options,
       authFlag,
@@ -61,7 +61,7 @@ class FetchService {
       body: JSON.stringify({ data }),
     };
 
-    return FetchService.fetch(
+    return API.fetch(
       url,
       options,
       authFlag,
@@ -79,7 +79,7 @@ class FetchService {
   static DELETE(url, authFlag = true) {
     const options = { method: 'DELETE' };
 
-    return FetchService.fetch(
+    return API.fetch(
       url,
       options,
       authFlag,
@@ -112,7 +112,7 @@ class FetchService {
       ...options,
     })
       .then((res) => {
-        if (!FetchService._checkStatus(res)) {
+        if (!API._checkStatus(res)) {
           return res.json()
             .then((blob) => Promise.reject(ErrorService.parseError(blob)));
         }
@@ -134,4 +134,4 @@ class FetchService {
   }
 }
 
-module.exports = FetchService;
+module.exports = API;
