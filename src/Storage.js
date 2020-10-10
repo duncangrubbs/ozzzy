@@ -5,20 +5,16 @@
  */
 
 class Storage {
-  constructor(provider) {
-    this.provider = provider;
+  static setItem(key, value) {
+    return localStorage.setItem(key, value);
   }
 
-  setItem(key, value) {
-    this.provider.setItem(key, value);
+  static getItem(key) {
+    return localStorage.getItem(key);
   }
 
-  getItem(key) {
-    this.provider.getItem(key);
-  }
-
-  removeItem(key) {
-    this.provider.removeItem(key);
+  static removeItem(key) {
+    return localStorage.removeItem(key);
   }
 }
 
