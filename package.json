@@ -8,6 +8,7 @@
   "license": "MIT",
   "scripts": {
     "test": "jest tests/*.test.js --env=jsdom",
+    "coverage": "jest tests/*.test.js --env=jsdom --coverage",
     "lint": "eslint ."
   },
   "devDependencies": {
