@@ -3,7 +3,7 @@
 
 Ozzy is an API middleware boilerplate that seamlessly connects your web components to your API, with configurable options and powerful features. For now it is just a boilerplate, rather than a library, and therefore entirely configurable. Checkout this [blog post](https://duncangrubbs.surge.sh/blog/oct012020) if you're curious about the inspiration and goals behind the project.
 
-With the minimum amount of configuration, it provides smooth error handling and local token storage and parsing with the provider of your choice. You can think of Ozzy as a starter kit for building abritray complexity into your middlware. The codebase encourages customization to be modularized and testable, and follow a clean architecture.
+With the minimum amount of configuration, it provides smooth error handling and local token storage and parsing with the providers of your choice. You can think of Ozzy as a starter kit for building abritray complexity into your middlware. The codebase encourages customization to be modularized and testable, and follow a clean architecture. If you are building a web app with a modern framework, you can use Ozzy as place to start. Even in a small app, abstracting away things like error handling, data parsing and settings headers can save you a lot of time.
 
 ## 🤝 Design Principles
 1. Lightweight -- _Keep it small, why not?_
@@ -17,9 +17,10 @@ With the minimum amount of configuration, it provides smooth error handling and 
     - `GET`, `POST`, `PUT`, `DELETE` functions that take a URL, optional data, and an optional auth flag that specifies whether or not to pass along the locally persisted token
   - `AuthService.js` -- All authentication related functionality is here
     - `loggedIn`, `isAdmin`, `logout`, functions handle parsing and removing locally persisted tokens
-    - `set` and `get` functions are used internally to interface with the storage provider
-  - `ErrorService.js` -- Parsers errors and returns an HTMLElement to be rendered to the user
-    - `parseError`, only used internally but the other classes
+    - `setToken` and `getToken` functions are used internally to interface with the storage provider
+  - `ErrorService.js` -- Parsers errors and returns an HTML element to be rendered to the user
+    - `parseError`, only used internally by the other classes
+  - `Error.js` -- Builds and styles the error component
     - Can be modified to style the error component that is returned
   - `Storage.js` -- Storage provider abstraction, depending on what provider you use, you will need to update this. (Redux, localStorage, etc.)
     - Abstracts away the persistant storage mechanism, so it can be easily updated
