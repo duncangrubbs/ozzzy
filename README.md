@@ -26,7 +26,7 @@ With the minimum amount of configuration, it provides smooth error handling and 
   - `constants.js` -- Basic constant declarations, and other options
 - You should read through the code and at least update `constants.js` to fit with your API
 
-### Example Usage
+### API Usage
 ```javascript
 const API = require('./API');
 
@@ -34,8 +34,29 @@ const API = require('./API');
 
 function fetchData() {
   API.GET(`${constants.BASE_API_URL}/users/all`, true)
-    .then((data) => {
-      this.setState({ data });
+    .then((users) => {
+      this.setState({ users });
+    })
+    .catch((error) => {
+      const errorWrapper = document.getElementById('error-wrapper');
+      errorWrapper.appendChild(error);
+    })
+}
+
+// ...
+```
+
+### AuthService Usage
+```javascript
+const AuthService = require('./AuthService');
+const API = require('./API');
+
+// ...
+
+function login() {
+  API.POST(`${constants.BASE_API_URL}/login`, credentials)
+    .then((token) => {
+      AuthService.setToken(token);
     })
     .catch((error) => {
       const errorWrapper = document.getElementById('error-wrapper');
