@@ -2,7 +2,7 @@
 # ozzy
 > A lightweight, modular, REST API middleware boilerplate
 
-Ozzy is an API middleware boilerplate that seamlessly connects your web components to your API, with configurable options and powerful features. For now it is just a boilerplate, rather than a library, and therefore entirely configurable. Checkout this [blog post](https://duncangrubbs.surge.sh/blog/oct012020) if you're curious about the inspiration and goals behind the project.
+Ozzy is an API middleware boilerplate that seamlessly connects your web components to your APIs, with configurable options and powerful features. For now it is just a boilerplate, rather than a library, and therefore entirely configurable. Checkout this [blog post](https://duncangrubbs.surge.sh/blog/oct012020) if you're curious about the inspiration and goals behind the project.
 
 With the minimum amount of configuration, it provides smooth error handling and local token storage and parsing with the providers of your choice. You can think of Ozzy as a starter kit for building abritray complexity into your middlware. The codebase encourages customization to be modularized and testable, and follow a clean architecture. If you are building a web app with a modern framework, you can use Ozzy as place to start. Even in a small app, abstracting away things like error handling, data parsing and settings headers can save you a lot of time.
 
@@ -30,7 +30,7 @@ With the minimum amount of configuration, it provides smooth error handling and 
   - `constants.js` -- Basic constant declarations, and other options
 - You should read through the code and at least update `constants.js` to fit with your API
 
-### API Usage
+### `API` Example Use
 ```javascript
 const { BASE_API_URL } = require('../ozzy/constants');
 const API = require('../ozzy/API');
@@ -51,7 +51,7 @@ function fetchData() {
 // ...
 ```
 
-### AuthService Usage
+### `AuthService` Example Use
 ```javascript
 const { BASE_API_URL } = require('../ozzy/constants');
 const AuthService = require('../ozzy/AuthService');
