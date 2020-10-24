@@ -38,7 +38,7 @@ const API = require('../ozzy/API');
 // ...
 
 function fetchData() {
-  API.GET(`${constants.BASE_API_URL}/users/all`, true)
+  API.GET(`${BASE_API_URL}/users/all`, true)
     .then((users) => {
       this.setState({ users });
     })
