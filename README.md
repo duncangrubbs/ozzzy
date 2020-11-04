@@ -60,7 +60,7 @@ const API = require('../ozzy/API');
 // ...
 
 function login() {
-  API.POST(`${constants.BASE_API_URL}/login`, credentials)
+  API.POST(`${BASE_API_URL}/login`, credentials)
     .then((token) => {
       AuthService.setToken(token);
     })
