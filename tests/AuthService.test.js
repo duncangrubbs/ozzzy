@@ -1,7 +1,9 @@
 const AuthService = require('../src/AuthService');
+const buildJWTParser = require('./mocks/jwt');
 
 beforeEach(() => {
   localStorage.clear();
+  // jwt.mockClear();
 });
 
 test('checks if user is logged in', () => {
@@ -10,22 +12,37 @@ test('checks if user is logged in', () => {
   expect(value).toBe(false);
 });
 
-test('checks if user is admin', () => {
+test('validates user is not admin', () => {
   const value = AuthService.isAdmin();
   
   expect(value).toBe(false);
 });
 
-test('checks if token is expired', () => {
+test('validates user is admin', () => {
+  localStorage.setItem('token', 'ashfjskdfh');
+  const value = AuthService.isAdmin();
+  
+  expect(value).toBe(true);
+});
+
+test('checks for unexpired token', () => {
   const value = AuthService.isTokenExpired(1234);
   
   expect(value).toBe(false);
 });
 
+// test('checks for expired token', () => {
+//   const value = AuthService.isTokenExpired(1234);
+  
+//   expect(value).toBe(true);
+// });
+
 test('sets token', () => {
-  AuthService.setToken('12358742yshgk');
+  const tokenValue = '12358742yshgk';
+  AuthService.setToken(tokenValue);
   const value = localStorage.getItem('token');
   expect(value).not.toBe(null);
+  expect(value).toBe(tokenValue);
 });
 
 test('retrives token when there is one', () => {

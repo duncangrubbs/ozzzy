@@ -1,7 +1,7 @@
 /**
  * @author Duncan Grubbs
  * @description Storage abstraction layer for dependency injection
- * @version 0.1.0
+ * @version 0.1.1
  */
 
 const { storageProvider } = require('./constants');

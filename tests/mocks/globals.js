@@ -1,3 +1,5 @@
+const buildJWTParser = require('./jwt');
+
 let store = {};
 
 class LocalStorageMock {
@@ -20,15 +22,4 @@ class LocalStorageMock {
 
 global.localStorage = LocalStorageMock;
 
-class JWT {
-  static decode(token) {
-    return {
-      exp: Date.now(),
-      userInfo: {
-        permissionType: 1
-      }
-    };
-  }
-}
-
-global.jwt = JWT;
+global.jwt = buildJWTParser(false, true);

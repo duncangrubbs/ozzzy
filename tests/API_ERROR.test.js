@@ -1,18 +1,16 @@
-const API = require('../src/API');
+const Api = require('../src/ApiService');
+const buildFetchWithStatus = require('./mocks/fetch');
+const { VALID_URL } = require('./mocks/constants');
 
-global.fetch = jest.fn(() =>
-  Promise.resolve({
-    status: 400,
-    json: () => Promise.resolve({ data: 'data', error: 'hello' }),
-  })
-);
+global.fetch = buildFetchWithStatus(400);
 
 beforeEach(() => {
   fetch.mockClear();
 });
 
 test('makes GET request and handles 400', () => {
-  API.GET('https://www.w.com')
+  Api
+    .GET(VALID_URL)
     .catch((error) => {
       expect(error).not.toBe(null);
     })
@@ -21,7 +19,8 @@ test('makes GET request and handles 400', () => {
 });
 
 test('makes POST request and handles 400', () => {
-  API.POST('https://www.w.com')
+  Api
+    .POST(VALID_URL)
     .catch((error) => {
       expect(error).not.toBe(null);
     })
@@ -31,7 +30,8 @@ test('makes POST request and handles 400', () => {
 
 
 test('makes PUT request and handles 400', () => {
-  API.PUT('https://www.w.com')
+  Api
+    .PUT(VALID_URL)
     .catch((error) => {
       expect(error).not.toBe(null);
     })
@@ -40,7 +40,8 @@ test('makes PUT request and handles 400', () => {
 });
 
 test('makes DELETE request and handles 400', () => {
-  API.DELETE('https://www.w.com')
+  Api
+    .DELETE(VALID_URL)
     .catch((error) => {
       expect(error).not.toBe(null);
     })

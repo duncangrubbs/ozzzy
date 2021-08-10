@@ -2,7 +2,7 @@
  * @author Duncan Grubbs
  * @description Auth middleware between a REST API and a frontend client
  * Stores and validates tokens, handles logging in and out
- * @version 0.1.0
+ * @version 0.1.1
  */
 
 const Storage = require('./Storage');
@@ -61,7 +61,7 @@ class AuthService {
 
   /**
    * Gets token from storage.
-   * @returns {String} Token or null.
+   * @returns {String | Null} Token or null.
    */
   static getToken() {
     const token = Storage.getItem('token');

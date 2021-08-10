@@ -1,27 +1,61 @@
 /**
  * @author Duncan Grubbs
  * @description Middleware between a REST API and client HTML components
- * @version 0.1.0
+ * @version 0.1.1
  */
 
 const AuthService = require('./AuthService');
 const ErrorService = require('./ErrorService');
+const { AUTH_HEADER_STRING, extractDataFromApiResponse } = require('./constants');
 
-class API {
+const HeadersWithAuth = {
+  Accept: 'application/json',
+  'Content-Type': 'application/json',
+  Authorization: `${AUTH_HEADER_STRING} ${AuthService.getToken()}`,
+};
+
+const HeadersWithoutAuth = {
+  Accept: 'application/json',
+  'Content-Type': 'application/json',
+};
+
+/**
+ * Builds a formatted url with parameters
+ * @param {String} baseUrl Base URL with no params attached
+ * @param {Obbject} params Key-value pairs for URL parameters
+ * @returns Full url with params embedded
+ */
+function buildUrlWithQueryParameters(baseUrl, params) {
+  let fullUrl = baseUrl;
+  Object.keys(params).forEach((key, index) => {
+    if (index === 0) {
+      fullUrl = `${fullUrl}?${params}=${params[key]}`;
+    } else {
+      fullUrl = `${fullUrl}&${params}=${params[key]}`;
+    }
+  });
+
+  return fullUrl;
+}
+
+class Api {
   /**
    * Sends GET request to and endpoint
    * Returns promise with parsed response or an HTML element for the error
    * @param {String} url API endpoint
    * @param {Boolean} authFlag Send Authorization Header
+   * @param {Object} params Key-value pairs for URL parameters passed to the API
    */
-  static GET(url, authFlag = true) {
+  static GET(url, authFlag = true, params = {}) {
     const options = { method: 'GET' };
+    const urlWithParams = buildUrlWithQueryParameters(url, params);
 
-    return API.fetch(
-      url,
-      options,
-      authFlag,
-    )
+    return Api
+      .fetch(
+        urlWithParams,
+        options,
+        authFlag,
+      )
       .then((data) => Promise.resolve(data))
       .catch((error) => Promise.reject(error));
   }
@@ -39,11 +73,12 @@ class API {
       body: JSON.stringify({ data }),
     };
 
-    return API.fetch(
-      url,
-      options,
-      authFlag,
-    )
+    return Api
+      .fetch(
+        url,
+        options,
+        authFlag,
+      )
       .then((blob) => Promise.resolve(blob))
       .catch((error) => Promise.reject(error));
   }
@@ -61,11 +96,12 @@ class API {
       body: JSON.stringify({ data }),
     };
 
-    return API.fetch(
-      url,
-      options,
-      authFlag,
-    )
+    return Api
+      .fetch(
+        url,
+        options,
+        authFlag,
+      )
       .then((blob) => Promise.resolve(blob))
       .catch((error) => Promise.reject(error));
   }
@@ -79,13 +115,38 @@ class API {
   static DELETE(url, authFlag = true) {
     const options = { method: 'DELETE' };
 
-    return API.fetch(
-      url,
-      options,
-      authFlag,
-    )
+    return Api
+      .fetch(
+        url,
+        options,
+        authFlag,
+      )
       .then((data) => Promise.resolve(data))
       .catch((error) => Promise.reject(error));
+  }
+
+  /**
+   * Converts all dates in string format to date objects within
+   * a given object
+   * @param data Object to convert string dates inside of
+   * @returns Same input object but with string dates
+   * converted to Date objects
+   */
+  static deserializeDates(data) {
+    const dateFormat = /^-?\d+-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
+
+    function hydrator(key, value) {
+      if (typeof value === 'string' && dateFormat.test(value)) {
+        return new Date(value);
+      }
+
+      return value;
+    }
+
+    const dataAsString = JSON.stringify(data);
+    const hydratedData = JSON.parse(dataAsString, hydrator);
+
+    return Promise.resolve(hydratedData);
   }
 
   /**
@@ -97,26 +158,23 @@ class API {
    */
   static fetch(url, options, authFlag) {
     const headers = authFlag
-      ? {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${AuthService.getToken()}`,
-      }
-      : {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      };
+      ? HeadersWithAuth
+      : HeadersWithoutAuth;
 
     return fetch(url, {
       headers,
       ...options,
     })
       .then((res) => {
-        if (!API.checkStatus(res)) {
-          return res.json()
+        if (!Api.checkStatus(res)) {
+          return res
+            .json()
             .then((blob) => Promise.reject(ErrorService.parseError(blob)));
         }
-        return res.json().then((blob) => Promise.resolve(blob.data));
+        return res
+          .json()
+          .then((blob) => Api.deserializeDates(extractDataFromApiResponse(blob)))
+          .then((data) => Promise.resolve(data));
       });
   }
 
@@ -134,4 +192,4 @@ class API {
   }
 }
 
-module.exports = API;
+module.exports = Api;

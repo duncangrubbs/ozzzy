@@ -1,18 +1,16 @@
-const API = require('../src/API');
+const Api = require('../src/ApiService');
+const buildFetchWithStatus = require('./mocks/fetch');
+const { VALID_URL } = require('./mocks/constants');
 
-global.fetch = jest.fn(() =>
-  Promise.resolve({
-    status: 200,
-    json: () => Promise.resolve({ data: 'data', error: 'hello' }),
-  })
-);
+global.fetch = buildFetchWithStatus(200);
 
 beforeEach(() => {
   fetch.mockClear();
 });
 
 test('makes GET request and handles 200', () => {
-  API.GET('https://www.w.com')
+  Api
+    .GET(VALID_URL)
     .then((data) => {
       expect(data).not.toBe(null);
     })
@@ -21,7 +19,8 @@ test('makes GET request and handles 200', () => {
 });
 
 test('makes POST request and handles 200', () => {
-  API.POST('https://www.w.com')
+  Api
+    .POST(VALID_URL)
     .then((data) => {
       expect(data).not.toBe(null);
     })
@@ -31,7 +30,8 @@ test('makes POST request and handles 200', () => {
 
 
 test('makes PUT request and handles 200', () => {
-  API.PUT('https://www.w.com')
+  Api
+    .PUT(VALID_URL)
     .then((data) => {
       expect(data).not.toBe(null);
     })
@@ -40,7 +40,8 @@ test('makes PUT request and handles 200', () => {
 });
 
 test('makes DELETE request and handles 200', () => {
-  API.DELETE('https://www.w.com')
+  Api
+    .DELETE(VALID_URL)
     .then((data) => {
       expect(data).not.toBe(null);
     })

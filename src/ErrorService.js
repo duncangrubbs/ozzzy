@@ -2,7 +2,7 @@
  * @author Duncan Grubbs
  * @description Error handling middleware between a REST API and a frontend client
  * Parses API errors and returns HTML components
- * @version 0.1.0
+ * @version 0.1.1
  */
 
 const Error = require('./Error');

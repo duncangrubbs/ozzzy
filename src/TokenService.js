@@ -1,7 +1,7 @@
 /**
  * @author Duncan Grubbs
  * @description Token parsing abstraction layer for dependency injection
- * @version 0.1.0
+ * @version 0.1.1
  */
 
 const { tokenParser } = require('./constants');

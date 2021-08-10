@@ -1,7 +1,7 @@
 /**
  * @author Duncan Grubbs
  * @description HTML Component for rendering API errors on screen
- * @version 0.1.0
+ * @version 0.1.1
  */
 
 /**
