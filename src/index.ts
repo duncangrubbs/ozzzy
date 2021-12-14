@@ -7,7 +7,6 @@ const baseUrl = 'https://jsonplaceholder.typicode.com';
 const api = new Api(
   baseUrl,
   new Auth(),
-  'data_here',
 
   /*
   You can apply your middleware here. For example
@@ -19,4 +18,13 @@ const api = new Api(
   hydrateDates
 );
 
-api.get('/todos/1').then((data) => console.log(data));
+function sampleMiddleware(data: any, next: any) {
+  console.log('here in the second middleware');
+  return next(data);
+}
+
+/*
+You can also apply middleware at the request level for more specific
+data modifications you need
+*/
+api.get('/todos/1', sampleMiddleware).then((data) => console.log(data));

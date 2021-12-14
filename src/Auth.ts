@@ -9,7 +9,7 @@ class Auth {
     this.token = token;
   }
 
-  getHeaders(): Array<Array<any>> {
+  getHeaders(): Array<Array<string>> {
     if (!this.type && !this.token) {
       return [];
     }
