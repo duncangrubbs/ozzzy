@@ -9,7 +9,13 @@ const api = new Api(
   new Auth(),
   'data_here',
 
-  // apply your middleware here
+  /*
+  You can apply your middleware here. For example
+  this is a middleware that parses dates that have
+  been serialized as strings when put into JSON. This
+  way when you start working with your dates you have immediate
+  access to the native JS Date() objects
+  */
   hydrateDates
 );
 
