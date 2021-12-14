@@ -1,4 +1,4 @@
-import AuthTypes from './enums/AuthTypes';
+import AuthTypes from '../enums/AuthTypes';
 
 class Auth {
   type?: AuthTypes;

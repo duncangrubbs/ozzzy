@@ -1,26 +1,22 @@
 const fetch = require('node-fetch');
 
-import RestMethods from './enums/RestMethods';
+import RestMethods from '../enums/RestMethods';
 import Auth from './Auth';
-import { Middleware } from './types/Middleware';
+import { Middleware } from '../types/Middleware';
 
 class Api {
   baseUrl: string;
   auth: Auth;
   middleware: Middleware[];
 
-  constructor(
-    baseUrl: string,
-    auth: Auth,
-    ...middleware: Middleware[]
-  ) {
+  constructor(baseUrl: string, auth: Auth, ...middleware: Middleware[]) {
     this.middleware = middleware;
     this.baseUrl = baseUrl;
     this.auth = auth;
   }
 
   /**
-   * 
+   *
    * @param url Relative url to base url provided in the constructor. Represents
    * the 'endpoint' you are routing to
    * @param middleware Optional middleware functions to be applied to the response data
@@ -33,7 +29,7 @@ class Api {
   }
 
   /**
-   * 
+   *
    * @param url Relative url to base url provided in the constructor. Represents
    * the 'endpoint' you are routing to
    * @param payload Payload data that is send back to the API in request.body
@@ -50,7 +46,7 @@ class Api {
   }
 
   /**
-   * 
+   *
    * @param url Relative url to base url provided in the constructor. Represents
    * the 'endpoint' you are routing to
    * @param payload Payload data that is send back to the API in request.body
@@ -67,7 +63,7 @@ class Api {
   }
 
   /**
-   * 
+   *
    * @param url Relative url to base url provided in the constructor. Represents
    * the 'endpoint' you are routing to
    * @param payload Payload data that is send back to the API in request.body
@@ -102,7 +98,7 @@ class Api {
   }
 
   /**
-   * 
+   *
    * @param url Endpoint to be appended to baseUrl provided in the contructor
    * @param options Request options, in this case they come from on of the
    * supported REST methods in this class
