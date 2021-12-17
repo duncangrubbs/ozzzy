@@ -105,15 +105,13 @@ class Api {
    * @returns Response data, after all the middleware has been applied
    */
   private fetch(url: string, options: any): Promise<any> {
-    return (
-      fetch(`${this.baseUrl}${url}`, {
-        headers: this.auth.getHeaders(),
-        ...options,
-      })
-        .then((data: any) => data.json())
-        .then((data: any) => this.applyMiddleware(data))
-        .catch((error: any) => console.log(error))
-    );
+    return fetch(`${this.baseUrl}${url}`, {
+      headers: this.auth.getHeaders(),
+      ...options,
+    })
+      .then((data: any) => data.json())
+      .then((data: any) => this.applyMiddleware(data))
+      .catch((error: any) => console.log(error));
   }
 }
 

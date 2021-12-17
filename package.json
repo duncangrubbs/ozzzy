@@ -8,6 +8,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc -p .",
+    "test": "echo \"ok\"",
     "start": "node dist/example.js",
     "coverage": "jest tests/*.test.js --env=jsdom --coverage && open ./coverage/lcov-report/index.html",
     "prettier": "prettier --write --single-quote src/",

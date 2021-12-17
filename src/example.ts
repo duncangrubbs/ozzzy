@@ -1,4 +1,4 @@
-import { Api, Auth, hydrateDates} from './ozzy';
+import { Api, Auth, hydrateDates } from './ozzy';
 
 const baseUrl = 'https://jsonplaceholder.typicode.com';
 
