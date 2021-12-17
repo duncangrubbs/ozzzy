@@ -111,7 +111,6 @@ class Api {
         ...options,
       })
         .then((data: any) => data.json())
-        // TODO: support promises in middleware
         .then((data: any) => this.applyMiddleware(data))
         .catch((error: any) => console.log(error))
     );
