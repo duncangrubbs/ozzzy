@@ -1,6 +1,6 @@
 ![CI](https://github.com/duncangrubbs/ozzy/workflows/CI/badge.svg?event=push)
-# ozzy
-> A lightweight, easy to compose, configurable REST API middleware
+# 🦘 ozzy
+> A lightweight, easy to compose, configurable REST API interface
 
 Ozzy is a service for interacting with REST APIs from a Javascript/Typescript client. The core pattern is similar [Express](https://expressjs.com/)'s middleware. It was origionally inspired by this [blog post](https://duncangrubbs.surge.sh/blog/oct012020) but has since been updated after more learning on my end. In fact, I recently wrote a new blog post about one of my favorite [uses of middleware](https://duncangrubbs.surge.sh/blog/jan122022).
 

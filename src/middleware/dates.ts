@@ -1,8 +1,7 @@
-// regex that matches patterns from
-// JSON.stringify(new Date())
-
 import { Middleware } from '../ozzy';
 
+// regex that matches patterns from
+// JSON.stringify(new Date())
 const dateFormat = /^-?\d+-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
 
 function hydrator(key: string, value: any) {
