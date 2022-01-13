@@ -2,9 +2,9 @@
 # ozzy
 > A lightweight, easy to compose, configurable REST API middleware
 
-Ozzy is a service for interacting with REST APIs from a Javascript/Typescript client. The core pattern is similar [Express](https://expressjs.com/)'s middleware. It was origionally inspired by this [blog post](https://duncangrubbs.surge.sh/blog/oct012020) but has since been updated after more learning on my end.
+Ozzy is a service for interacting with REST APIs from a Javascript/Typescript client. The core pattern is similar [Express](https://expressjs.com/)'s middleware. It was origionally inspired by this [blog post](https://duncangrubbs.surge.sh/blog/oct012020) but has since been updated after more learning on my end. In fact, I recently wrote a new blog post about one of my favorite [uses of middleware](https://duncangrubbs.surge.sh/blog/jan122022).
 
-If you are building a web app with a modern framework but don't want to install another huge library like axios (almost 400kb!), Ozzy is a good place to start (14kb). Even in a small app, abstracting away things like error handling, data parsing and setting headers can save you a lot of time.
+If you are building a web app with a modern framework but don't want to install another huge library like axios (almost 400kb!), ozzy is a good place to start. Even in a small app, abstracting away things like error handling, data parsing and setting headers can save you a lot of time.
 
 ## 🤝 Design Principles
 1. Lightweight -- _Keep it small, why not?_
@@ -14,7 +14,7 @@ If you are building a web app with a modern framework but don't want to install 
 
 ## 🔨 Docs
 ### REST Methods
-Ozzy is similar to [axios](https://axios-http.com/docs/intro) in that is provides a core set of functions for making HTTP requests. The building block is the `Api` class. You start by constructing a `Api` for a specific backend service.
+Ozzy is similar to [axios](https://axios-http.com/docs/intro) in that is provides a core set of functions for making HTTP requests. The building block is the `Api` class. You start by constructing an `Api` for a specific backend service.
 ```javascript
 const userService = new Api(baseUrl, auth, ...middleware)
 ```
@@ -30,17 +30,20 @@ userService
 Under the hood this builds the request headers and options, sends the fetch request, applies all of your middleware functions, handles errors, and returns you the final result.
 
 ### Auth
-Ozzy supports basic auth out of the box. You can configure you auth at the service level by injecting the class into the Api constructor. To setup auth for the service, you build an `Auth` object.
+Ozzy supports basic auth out of the box. You can configure your auth at the service level by injecting the class into the `Api` constructor. To setup auth for the service, you build an `Auth` object.
 ```javascript
 const auth = new Auth(AuthTypes.Bearer, userToken)
 
 const service = new Api(url, auth...)
 ```
 
-This code configures the service to send the provided token in the `Authorization` header.
+This code configures the service to send the provided token in the `Authorization` header. The `AuthType` determines the format of this header. In the case the header would look like
+```
+Authorization: Bearer YOUR_TOKEN
+```
 
 ### Middleware
-At the core of Ozzy is the concept of middleware. This can be applied at the service level or the request level.
+At the core of Ozzy is the concept of middleware. This can be applied at the service level or the request level. Middleware intercepts the `Response` object, does something to it, and then passes it to the next middleware, so order matters.
 ```javascript
 const middlewareOne = (data, next) => {
   // do something to the response data
@@ -62,6 +65,16 @@ const middlewareTwo = (data, next) => {
 
 myService.get('/api/foo/bar', middlewareTwo).then(data => console.log(data))
 ```
+For those of you who have written a lot of Javascript, you are probably familiar with writing something like this
+```javascript
+fetch('some url', ...)
+  // check the response status code
+  .then(response => checkStatus(response))
+  // parse as json
+  .then(response => response.json())
+  // finally return the response
+```
+With Ozzy, you can write a middleware function once, and then apply it at the service level or request level. Out of convenience, ozzy comes with a few middlewares out of the box. Of course it is your choice if you want to apply these middlewares, but they are already written so that you do not have write them yourself. These include a middleware to parse the response as JSON, and a middleware to check the status code of the response and reject the promise if it is outside of the safe range.
 
 ## 🙌 Contributing
 Feel free to fork and make PRs, they are always welcome! There is a lot of work to do on this project and any help is appreciated. If you don't know where to start you can check out the [issues](https://github.com/duncangrubbs/ozzy/issues) page.

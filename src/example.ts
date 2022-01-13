@@ -1,8 +1,17 @@
+import { checkStatus } from './middleware/error-handler';
+import { toJson } from './middleware/json';
 import { Api, Auth, hydrateDates } from './ozzy';
 
 const baseUrl = 'https://jsonplaceholder.typicode.com';
 
-const api = new Api(
+type ApiResponse = {
+  userId: object;
+  id: string;
+  title: string;
+  completed: boolean;
+};
+
+const api = new Api<ApiResponse>(
   baseUrl,
   new Auth(),
 
@@ -13,11 +22,13 @@ const api = new Api(
   way when you start working with your dates you have immediate
   access to the native JS Date() objects
   */
+  checkStatus,
+  toJson,
   hydrateDates
 );
 
 function sampleMiddleware(data: any, next: any) {
-  console.log('here in the second middleware');
+  console.log('here in the dummy middleware');
   return next(data);
 }
 
@@ -25,4 +36,6 @@ function sampleMiddleware(data: any, next: any) {
 You can also apply middleware at the request level for more specific
 data modifications you need
 */
-api.get('/todos/1', sampleMiddleware).then((data) => console.log(data));
+api
+  .get('/todos/1', sampleMiddleware)
+  .then((data: ApiResponse) => console.log(data));
