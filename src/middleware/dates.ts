@@ -1,5 +1,3 @@
-import { Middleware } from '../ozzy';
-
 // regex that matches patterns from
 // JSON.stringify(new Date())
 const dateFormat = /^-?\d+-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
@@ -19,10 +17,7 @@ function hydrator(key: string, value: any) {
  * @param next Next middleware handler function
  * @returns Call to next middleware handler
  */
-export function hydrateDates(
-  data: object,
-  next: Middleware<any>
-): Promise<any> {
+export function hydrateDates(data: object, next: any): Promise<any> {
   console.log('here in the date middleware');
   const dataAsString = JSON.stringify(data);
   const hydratedData = JSON.parse(dataAsString, hydrator);

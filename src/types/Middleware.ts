@@ -1,1 +1,1 @@
-export type Middleware<T> = (data: T, next?: any) => Promise<any>;
+export type Middleware<K, V> = (data: K, next?: Middleware<K, V>) => Promise<V>;

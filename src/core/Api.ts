@@ -7,7 +7,7 @@ import { Middleware } from '../types/Middleware';
 class Api<T> {
   baseUrl: string;
   auth: Auth;
-  middleware: Middleware<any>[];
+  middleware: Middleware<any, any>[];
 
   /**
    * Constructs an instance of the Api class
@@ -17,10 +17,23 @@ class Api<T> {
    * @param middleware Any middleware functions that will be applied at the service
    * level rather than the request level. These are meant to be global actions.
    */
-  constructor(baseUrl: string, auth: Auth, ...middleware: Middleware<any>[]) {
+  constructor(
+    baseUrl: string,
+    auth: Auth,
+    ...middleware: Middleware<any, any>[]
+  ) {
     this.middleware = middleware;
     this.baseUrl = baseUrl;
     this.auth = auth;
+  }
+
+  /**
+   * Adds a middleware to be applied at the service level, class instance
+   * @param middleware Middleware function you want to apply at the
+   * service level
+   */
+  use(middleware: Middleware<any, any>): void {
+    this.middleware.push(middleware);
   }
 
   /**
@@ -30,8 +43,8 @@ class Api<T> {
    * @param middleware Optional middleware functions to be applied to the response data
    * @returns Response data from the request
    */
-  get(url: string, ...middleware: Middleware<any>[]): Promise<T> {
-    this.middleware = [...this.middleware, ...middleware];
+  get(url: string, ...middleware: Middleware<any, any>[]): Promise<T> {
+    this.middleware.push(...middleware);
     const options = { method: RestMethods.GET };
     return this.fetch(url, options);
   }
@@ -44,8 +57,12 @@ class Api<T> {
    * @param middleware Optional middleware functions to be applied to the response data
    * @returns Response data from the request
    */
-  put(url: string, payload: any, ...middleware: Middleware<any>[]): Promise<T> {
-    this.middleware = [...this.middleware, ...middleware];
+  put(
+    url: string,
+    payload: any,
+    ...middleware: Middleware<any, any>[]
+  ): Promise<T> {
+    this.middleware.push(...middleware);
     const options = {
       body: JSON.stringify(payload),
       method: RestMethods.PUT,
@@ -64,9 +81,9 @@ class Api<T> {
   post(
     url: string,
     payload: any,
-    ...middleware: Middleware<any>[]
+    ...middleware: Middleware<any, any>[]
   ): Promise<T> {
-    this.middleware = [...this.middleware, ...middleware];
+    this.middleware.push(...middleware);
     const options = {
       body: JSON.stringify(payload),
       method: RestMethods.POST,
@@ -85,9 +102,9 @@ class Api<T> {
   delete(
     url: string,
     payload: any,
-    ...middleware: Middleware<any>[]
+    ...middleware: Middleware<any, any>[]
   ): Promise<T> {
-    this.middleware = [...this.middleware, ...middleware];
+    this.middleware.push(...middleware);
     const options = {
       body: JSON.stringify(payload),
       method: RestMethods.DELETE,
@@ -101,7 +118,7 @@ class Api<T> {
    * @param data Data object to apply the middleware to
    * @returns Data that has gone through all middleware functions
    */
-  private applyMiddleware(data: Response) {
+  private applyMiddleware(data: Response): Promise<T> {
     let index = 0;
     const nextHandler = (newData: any) => {
       index++;
@@ -114,7 +131,7 @@ class Api<T> {
   }
 
   /**
-   * Wrapepr of the built in fetch function. Applies options and middleware
+   * Wrapper around the built in fetch function. Applies options and middleware
    * and returns a Promise
    * @param url Endpoint to be appended to baseUrl provided in the contructor
    * @param options Request options, in this case they come from on of the
@@ -122,15 +139,12 @@ class Api<T> {
    * @returns Response data, after all the middleware has been applied
    */
   private fetch(url: string, options: any): Promise<T> {
-    return (
-      fetch(`${this.baseUrl}${url}`, {
-        headers: this.auth.getHeaders(),
-        ...options,
-      })
-        .then((response: Response) => this.applyMiddleware(response))
-        // TODO: throw this back out to the caller
-        .catch((error: any) => console.log(error))
-    );
+    return fetch(`${this.baseUrl}${url}`, {
+      headers: this.auth.getHeaders(),
+      ...options,
+    })
+      .then((response: Response) => this.applyMiddleware(response))
+      .catch((error: any) => Promise.reject(error));
   }
 }
 
