@@ -7,6 +7,7 @@ import { Middleware } from '../types/Middleware';
 class Api<T> {
   baseUrl: string;
   auth: Auth;
+  headers: Array<Array<string>> = [];
   middleware: Middleware<any, any>[];
 
   /**
@@ -20,11 +21,13 @@ class Api<T> {
   constructor(
     baseUrl: string,
     auth: Auth,
+    headers: Array<Array<string>> = [],
     ...middleware: Middleware<any, any>[]
   ) {
     this.middleware = middleware;
     this.baseUrl = baseUrl;
     this.auth = auth;
+    this.headers = headers;
   }
 
   /**
@@ -139,8 +142,9 @@ class Api<T> {
    * @returns Response data, after all the middleware has been applied
    */
   private fetch(url: string, options: any): Promise<T> {
+    const combinedHeaders = this.headers.push(...this.auth.getHeaders());
     return fetch(`${this.baseUrl}${url}`, {
-      headers: this.auth.getHeaders(),
+      headers: combinedHeaders,
       ...options,
     })
       .then((response: Response) => this.applyMiddleware(response))

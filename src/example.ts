@@ -15,13 +15,10 @@ type ApiResponse = {
 const api = new Api<ApiResponse>(
   baseUrl,
   new Auth(),
+  [],
 
   /*
-  You can apply your middleware here. For example
-  this is a middleware that parses dates that have
-  been serialized as strings when put into JSON. This
-  way when you start working with your dates you have immediate
-  access to the native JS Date() objects
+  You can apply your middleware here.
   */
   logger,
   checkStatus
