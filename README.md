@@ -36,10 +36,10 @@ try {
 Under the hood this builds the request headers and options, sends the fetch request, applies all of your middleware functions and returns you the final result. Ozzy support all common REST methods
 
 ```typescript
-Api.get<T>(url: string, ...middleware: any): Promise<T>
-Api.put<T>(url: string, payload: any, ...middleware: any): Promise<T>
-Api.post<T>(url: string, payload: any, ...middleware: any): Promise<T>
-Api.delete<T>(url: string, payload: any, ...middleware: any): Promise<T>
+Api.get<T>(url: string, ...middleware: any): Promise<T>;
+Api.put<T>(url: string, payload: any, ...middleware: any): Promise<T>;
+Api.post<T>(url: string, payload: any, ...middleware: any): Promise<T>;
+Api.delete<T>(url: string, payload: any, ...middleware: any): Promise<T>;
 ```
 
 ### Auth
@@ -91,7 +91,7 @@ fetch("some url", headers, ...options)
 // finally return the response
 ```
 
-With Ozzy, you can write a middleware function once, and then apply it at the service level or request level. Out of convenience, ozzy comes with a few middlewares out of the box. Of course it is your choice if you want to apply these middlewares, but they are already written so that you do not have write them yourself. These include a middleware to parse the response as JSON, a basic logger, and a middleware to check the status code of the response and reject the promise if it is outside of the safe range (200-300).
+With Ozzy, you can write a middleware function once, and then apply it at the service level or request level. Out of convenience, ozzy comes with a few middlewares out of the box. Of course it is your choice if you want to apply these middlewares, but they are already written so that you do not have write them yourself. These include a middleware to parse the response as JSON, a basic logger, and a middleware to check the status code of the response and reject the promise if the `Response.ok` field is `false`.
 
 ## 🙌 Contributing
 
