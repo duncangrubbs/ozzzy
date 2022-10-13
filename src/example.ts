@@ -1,9 +1,9 @@
-import { checkStatus } from './middleware/error-handler';
-import { toJson } from './middleware/json';
-import { logger } from './middleware/logger';
-import { Api, Auth, hydrateDates } from './ozzy';
+import { checkStatus } from "./middleware/error-handler";
+import { toJson } from "./middleware/json";
+import { logger } from "./middleware/logger";
+import { Api, Auth, hydrateDates } from "./ozzy";
 
-const baseUrl = 'https://jsonplaceholder.typicode.com';
+const baseUrl = "https://jsonplaceholder.typicode.com";
 
 type ApiResponse = {
   userId: object;
@@ -32,15 +32,23 @@ api.use(toJson);
 api.use(hydrateDates);
 
 function sampleMiddleware(data: any, next: any) {
-  console.log('here in the dummy middleware');
+  console.log("[dummy middleware]");
   return next(data);
 }
 
-/*
-You can also apply middleware at the request level for more specific
-data modifications you need
-*/
-api
-  .get('/todos/1', sampleMiddleware)
-  .then((data: ApiResponse) => console.log(data))
-  .catch((error: any) => console.error(error));
+async function run() {
+  /*
+  You can also apply middleware at the request level for more specific
+  data modifications you need
+  */
+  const data = await api.get("/todos/1", sampleMiddleware);
+  console.log(data);
+
+  try {
+    await api.get("/todos/sadfsf/sdgsdg", sampleMiddleware);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+run();
