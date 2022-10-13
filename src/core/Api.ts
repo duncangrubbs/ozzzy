@@ -36,14 +36,12 @@ class Api {
    *
    * Example: ('/abc/1', { name: 'John', age: '12' }) => 'BASE_URL/abc/1?name=John&age=12'
    * @param url Endpoint path
-   * @param params URL params that you want to be appended to the endpoint
+   * @param params Optional URL params that you want to be appended to the endpoint
    * @returns The endpoint path with the query params appended
    */
-  constructUrlWithQueryParams(
-    url: string,
-    params: Record<string, string>
-  ): URL {
+  buildUrl(url: string, params: Record<string, string> = {}): URL {
     const urlObject = new URL(url, this.baseUrl);
+
     for (const param in params) {
       urlObject.searchParams.append(param, params[param]);
     }
@@ -67,7 +65,7 @@ class Api {
    * @param middleware Optional middleware functions to be applied to the response data
    * @returns Response data from the request
    */
-  get<K = any>(url: string, ...middleware: Middleware<any, any>[]): Promise<K> {
+  get<K = any>(url: URL, ...middleware: Middleware<any, any>[]): Promise<K> {
     this.middleware.push(...middleware);
     const options = { method: RestMethods.GET };
     return this.fetch<K>(url, options);
@@ -82,7 +80,7 @@ class Api {
    * @returns Response data from the request
    */
   put<K = any>(
-    url: string,
+    url: URL,
     payload: any,
     ...middleware: Middleware<any, any>[]
   ): Promise<K> {
@@ -103,7 +101,7 @@ class Api {
    * @returns Response data from the request
    */
   post<K = any>(
-    url: string,
+    url: URL,
     payload: any,
     ...middleware: Middleware<any, any>[]
   ): Promise<K> {
@@ -124,7 +122,7 @@ class Api {
    * @returns Response data from the request
    */
   delete<K = any>(
-    url: string,
+    url: URL,
     payload: any,
     ...middleware: Middleware<any, any>[]
   ): Promise<K> {
@@ -162,10 +160,9 @@ class Api {
    * supported REST methods in this class
    * @returns Response data, after all the middleware has been applied
    */
-  private fetch<K>(url: string, options: any): Promise<K> {
-    const fullUrl = new URL(url, this.baseUrl);
+  private fetch<K>(url: URL, options: any): Promise<K> {
     const combinedHeaders = this.headers.push(...this.auth.getHeaders());
-    return fetch(fullUrl, {
+    return fetch(url, {
       headers: combinedHeaders,
       ...options,
     })

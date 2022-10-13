@@ -24,6 +24,11 @@ const api = new Api(
   checkStatus
 );
 
+/**
+ * You can build URLs with query params
+ */
+console.log(api.buildUrl("/todos", { completed: "false" }).href);
+
 /* 
 You can also apply middleware using the .use() function, similar
 to Express.js
@@ -41,13 +46,16 @@ async function run() {
   You can also apply middleware at the request level for more specific
   data modifications you need
   */
-  const data = await api.get<ApiResponse>("/todos/1", sampleMiddleware);
+  const data = await api.get<ApiResponse>(
+    api.buildUrl("/todos/1"),
+    sampleMiddleware
+  );
   console.log(data);
 
   try {
-    await api.get("/todos/sadfsf/sdgsdg", sampleMiddleware);
+    await api.get(api.buildUrl("/todos/sadfsf/sdgsdg"), sampleMiddleware);
   } catch (error) {
-    console.log(error);
+    // you can handle the error here
   }
 }
 
