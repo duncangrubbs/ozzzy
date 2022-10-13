@@ -20,32 +20,26 @@ Ozzy is a interface for interacting with APIs from a Javascript/Typescript clien
 Ozzy is similar to [axios](https://axios-http.com/docs/intro) in that is provides a core set of functions for making HTTP requests. You start by constructing an `Api` for a specific backend service that your client needs to interact with.
 
 ```typescript
-const userService = new Api<T>(baseUrl, authService, ...middleware);
+const userService = new Api(baseUrl, authService, ...middleware);
 ```
 
 You provide the constructor with a `baseUrl`, an authentication service, and an optional collection of middleware functions. If you are writing Typescript, you can also type the API response that will be returned by all API requests. This type can be overridden at the request level though. This service now has a similar API to axios ... for example you can do something like
 
 ```typescript
 try {
-  const userResponse = await userService.get("/region/europe");
+  const userResponse = await userService.get<ResponseType>("/region/europe");
 } catch (error) {
   console.error(error);
 }
 ```
 
-If you wanted to override the type on this specific request you could do something like
-
-```typescript
-await userService.get<CustomResponseType>("/region/europe");
-```
-
 Under the hood this builds the request headers and options, sends the fetch request, applies all of your middleware functions and returns you the final result. Ozzy support all common REST methods
 
 ```typescript
-Api<T>.get(url: string, ...middleware: any): Promise<T>
-Api<T>.put(url: string, payload: any, ...middleware: any): Promise<T>
-Api<T>.post(url: string, payload: any, ...middleware: any): Promise<T>
-Api<T>.delete(url: string, payload: any, ...middleware: any): Promise<T>
+Api.get<T>(url: string, ...middleware: any): Promise<T>
+Api.put<T>(url: string, payload: any, ...middleware: any): Promise<T>
+Api.post<T>(url: string, payload: any, ...middleware: any): Promise<T>
+Api.delete<T>(url: string, payload: any, ...middleware: any): Promise<T>
 ```
 
 ### Auth
@@ -55,7 +49,7 @@ Ozzy supports basic auth out of the box. You can configure your auth at the serv
 ```typescript
 const auth = new Auth(AuthTypes.Bearer, userToken, 'Authorization')
 
-const service = new Api<T>(url, auth...)
+const service = new Api(url, auth...)
 ```
 
 This code configures the service to send the provided token in the `Authorization` header. The `AuthType` determines the format of this header. In the case the header would look like
@@ -75,7 +69,7 @@ const middlewareOne = (data, next) => {
   return next(data);
 };
 
-const myService = new Api<T>(baseUrl, new Auth(), middlewareOne);
+const myService = new Api(baseUrl, new Auth(), middlewareOne);
 
 const middlewareTwo = (data, next) => {
   // do something to the response data that is

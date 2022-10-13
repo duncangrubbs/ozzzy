@@ -12,7 +12,7 @@ type ApiResponse = {
   completed: boolean;
 };
 
-const api = new Api<ApiResponse>(
+const api = new Api(
   baseUrl,
   new Auth(),
   [],
@@ -41,7 +41,7 @@ async function run() {
   You can also apply middleware at the request level for more specific
   data modifications you need
   */
-  const data = await api.get("/todos/1", sampleMiddleware);
+  const data = await api.get<ApiResponse>("/todos/1", sampleMiddleware);
   console.log(data);
 
   try {

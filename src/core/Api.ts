@@ -4,7 +4,7 @@ import RestMethods from "../enums/RestMethods";
 import { Middleware } from "../types/Middleware";
 import Auth from "./Auth";
 
-class Api<T = any> {
+class Api {
   baseUrl: string;
   auth: Auth;
   headers: Array<Array<string>> = [];
@@ -34,7 +34,7 @@ class Api<T = any> {
    * Builds a URL with query params using the native platform
    * URLSearchParams constructor
    *
-   * EX: ('/abc/1', { name: 'John', age: '12' }) => 'BASE_URL/abc/1?name=John&age=12'
+   * Example: ('/abc/1', { name: 'John', age: '12' }) => 'BASE_URL/abc/1?name=John&age=12'
    * @param url Endpoint path
    * @param params URL params that you want to be appended to the endpoint
    * @returns The endpoint path with the query params appended
@@ -67,7 +67,7 @@ class Api<T = any> {
    * @param middleware Optional middleware functions to be applied to the response data
    * @returns Response data from the request
    */
-  get<K = T>(url: string, ...middleware: Middleware<any, any>[]): Promise<K> {
+  get<K = any>(url: string, ...middleware: Middleware<any, any>[]): Promise<K> {
     this.middleware.push(...middleware);
     const options = { method: RestMethods.GET };
     return this.fetch<K>(url, options);
@@ -81,7 +81,7 @@ class Api<T = any> {
    * @param middleware Optional middleware functions to be applied to the response data
    * @returns Response data from the request
    */
-  put<K = T>(
+  put<K = any>(
     url: string,
     payload: any,
     ...middleware: Middleware<any, any>[]
@@ -102,7 +102,7 @@ class Api<T = any> {
    * @param middleware Optional middleware functions to be applied to the response data
    * @returns Response data from the request
    */
-  post<K = T>(
+  post<K = any>(
     url: string,
     payload: any,
     ...middleware: Middleware<any, any>[]
@@ -123,7 +123,7 @@ class Api<T = any> {
    * @param middleware Optional middleware functions to be applied to the response data
    * @returns Response data from the request
    */
-  delete<K = T>(
+  delete<K = any>(
     url: string,
     payload: any,
     ...middleware: Middleware<any, any>[]
