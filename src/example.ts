@@ -1,9 +1,9 @@
-import { checkStatus } from "./middleware/error-handler";
-import { toJson } from "./middleware/json";
-import { logger } from "./middleware/logger";
-import { Api, Auth, hydrateDates } from "./ozzy";
+import { checkStatus } from './middleware/error-handler';
+import { toJson } from './middleware/json';
+import { logger } from './middleware/logger';
+import { Api, Auth, hydrateDates } from './ozzy';
 
-const baseUrl = "https://jsonplaceholder.typicode.com";
+const baseUrl = 'https://jsonplaceholder.typicode.com';
 
 type ApiResponse = {
   userId: object;
@@ -21,13 +21,13 @@ const api = new Api(
   You can apply your middleware here.
   */
   logger,
-  checkStatus
+  checkStatus,
 );
 
 /**
  * You can build URLs with query params
  */
-console.log(api.buildUrl("/todos", { completed: "false" }).href);
+console.log(api.buildUrl('/todos', { completed: 'false' }).href);
 
 /* 
 You can also apply middleware using the .use() function, similar
@@ -37,7 +37,7 @@ api.use(toJson);
 api.use(hydrateDates);
 
 function sampleMiddleware(data: any, next: any) {
-  console.log("[dummy middleware]");
+  console.log('[dummy middleware]');
   return next(data);
 }
 
@@ -47,13 +47,13 @@ async function run() {
   data modifications you need
   */
   const data = await api.get<ApiResponse>(
-    api.buildUrl("/todos/1"),
-    sampleMiddleware
+    api.buildUrl('/todos/1'),
+    sampleMiddleware,
   );
   console.log(data);
 
   try {
-    await api.get(api.buildUrl("/todos/sadfsf/sdgsdg"), sampleMiddleware);
+    await api.get(api.buildUrl('/todos/sadfsf/sdgsdg'), sampleMiddleware);
   } catch (error) {
     // you can handle the error here
   }

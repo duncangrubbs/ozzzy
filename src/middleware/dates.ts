@@ -3,7 +3,7 @@
 const dateFormat = /^-?\d+-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
 
 function hydrator(key: string, value: any) {
-  if (typeof value === "string" && dateFormat.test(value)) {
+  if (typeof value === 'string' && dateFormat.test(value)) {
     return new Date(value);
   }
 
@@ -18,7 +18,7 @@ function hydrator(key: string, value: any) {
  * @returns Call to next middleware handler
  */
 export function hydrateDates(data: object, next: any): Promise<any> {
-  console.log("[date middleware]");
+  console.log('[date middleware]');
   const dataAsString = JSON.stringify(data);
   const hydratedData = JSON.parse(dataAsString, hydrator);
 

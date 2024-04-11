@@ -1,6 +1,6 @@
-import RestMethods from "../enums/RestMethods";
-import { Middleware } from "../types/Middleware";
-import Auth from "./Auth";
+import RestMethods from '../enums/RestMethods';
+import { Middleware } from '../types/Middleware';
+import Auth from './Auth';
 
 class Api {
   baseUrl: string;

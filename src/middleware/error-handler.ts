@@ -5,7 +5,7 @@
  * @throws Error if response is not ok
  */
 export function checkStatus(response: Response, next: any): Promise<any> {
-  console.log("[error middleware]");
+  console.log('[error middleware]');
   if (!response.ok) {
     return (
       response
