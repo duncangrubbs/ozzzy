@@ -2,14 +2,22 @@
   "name": "ozzy",
   "version": "0.2.0",
   "description": "A lightweight API interface",
-  "main": "index.js",
-  "repository": "https://github.com/duncangrubbs/ozzy.git",
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md",
+    "package.json"
+  ],
+  "repository": {
+    "url": "git+https://github.com/duncangrubbs/ozzy.git"
+  },
   "author": "Duncan Grubbs <duncan.grubbs@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc -p .",
+    "build": "rm -rf dist && tsc --p tsconfig.production.json",
     "test": "echo \"ok\"",
-    "example": "npm run build && node dist/example.js",
+    "example": "rm -rf dist.examples && tsc --p tsconfig.examples.json --outDir dist.examples && node dist.examples/examples/basic.js",
     "prettier": "prettier --write --single-quote src/"
   },
   "devDependencies": {

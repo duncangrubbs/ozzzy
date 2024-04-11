@@ -1,8 +1,12 @@
-import { checkStatus } from './middleware/error-handler.middleware'
-import { toJson } from './middleware/json.middleware'
-import { logger } from './middleware/logger.middleware'
-import { logger as loggerUtil } from './utils/logger'
-import { ozzy, Auth, hydrateDates } from './ozzy'
+import {
+  ozzy,
+  Auth,
+  hydrateDates,
+  checkStatus,
+  toJson,
+  logger,
+  loggerUtil,
+} from '../index'
 
 const baseUrl = 'https://jsonplaceholder.typicode.com'
 
