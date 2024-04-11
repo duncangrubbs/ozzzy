@@ -4,7 +4,7 @@
 
 > A small, easy to compose, API interface
 
-Ozzy is a interface for interacting with APIs from a Javascript/Typescript client. It is essentially a stripped down version of axios with the inclusion of a middleware feature similar to [Express](https://expressjs.com/) middleware and [axios interceptors](https://axios-http.com/docs/interceptors). It was originally inspired by this [blog post](https://duncangrubbs.com/blog/oct012020) but has since been updated after more learning on my end. In fact, I recently wrote a new blog post about one of my favorite [uses of middleware](https://duncangrubbs.com/blog/jan122022).
+Ozzy is a interface for interacting with APIs from a Javascript/Typescript client. It is essentially a stripped down version of axios with the inclusion of a middleware feature similar to [Express](https://expressjs.com/) middleware and [axios interceptors](https://axios-http.com/docs/interceptors). It was originally inspired by this [blog post](https://duncangrubbs.com/blog/1) but has since been updated after more learning on my end. In fact, I recently wrote a new blog post about one of my favorite [uses of middleware](https://duncangrubbs.com/blog/2).
 
 ## 🤝 Design Principles
 
