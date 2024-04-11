@@ -1,6 +1,6 @@
-import RestMethods from '../enums/RestMethods';
-import { Middleware } from '../types/Middleware';
-import Auth from './Auth';
+import RestMethods from "../enums/RestMethods";
+import { Middleware } from "../types/Middleware";
+import Auth from "./Auth";
 
 class Api {
   baseUrl: string;
@@ -138,7 +138,7 @@ class Api {
    * @param data Data object to apply the middleware to
    * @returns Data that has gone through all middleware functions
    */
-  private applyMiddleware<K>(data: Response): Promise<K> {
+  private _applyMiddleware<K>(data: Response): Promise<K> {
     let index = 0;
     const nextHandler = (newData: any) => {
       index++;
@@ -159,12 +159,12 @@ class Api {
    * @returns Response data, after all the middleware has been applied
    */
   private fetch<K>(url: URL, options: any): Promise<K> {
-    const combinedHeaders = this.headers.push(...this.auth.getHeaders());
+    const combinedHeaders = [...this.headers, ...this.auth.getHeaders()];
     return fetch(url, {
       headers: combinedHeaders,
       ...options,
     })
-      .then((response: Response) => this.applyMiddleware<K>(response))
+      .then((response: Response) => this._applyMiddleware<K>(response))
       .catch((error: any) => Promise.reject(error));
   }
 }

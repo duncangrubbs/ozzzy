@@ -9,9 +9,8 @@
   "scripts": {
     "build": "tsc -p .",
     "test": "echo \"ok\"",
-    "start": "node dist/example.js",
-    "prettier": "prettier --write --single-quote src/",
-    "prettier:check": "prettier --single-quote --check src/"
+    "example": "npm run build && node dist/example.js",
+    "prettier": "prettier --write --single-quote src/"
   },
   "devDependencies": {
     "prettier": "^3.2.5"
