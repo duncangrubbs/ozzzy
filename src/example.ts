@@ -12,7 +12,7 @@ type ApiResponse = {
   completed: boolean;
 };
 
-const api = new Api<ApiResponse>(
+const api = new Api(
   baseUrl,
   new Auth(),
   [],
@@ -21,8 +21,13 @@ const api = new Api<ApiResponse>(
   You can apply your middleware here.
   */
   logger,
-  checkStatus
+  checkStatus,
 );
+
+/**
+ * You can build URLs with query params
+ */
+console.log(api.buildUrl('/todos', { completed: 'false' }).href);
 
 /* 
 You can also apply middleware using the .use() function, similar
@@ -32,15 +37,26 @@ api.use(toJson);
 api.use(hydrateDates);
 
 function sampleMiddleware(data: any, next: any) {
-  console.log('here in the dummy middleware');
+  console.log('[dummy middleware]');
   return next(data);
 }
 
-/*
-You can also apply middleware at the request level for more specific
-data modifications you need
-*/
-api
-  .get('/todos/1', sampleMiddleware)
-  .then((data: ApiResponse) => console.log(data))
-  .catch((error: any) => console.error(error));
+async function run() {
+  /*
+  You can also apply middleware at the request level for more specific
+  data modifications you need
+  */
+  const data = await api.get<ApiResponse>(
+    api.buildUrl('/todos/1'),
+    sampleMiddleware,
+  );
+  console.log(data);
+
+  try {
+    await api.get(api.buildUrl('/todos/sadfsf/sdgsdg'), sampleMiddleware);
+  } catch (error) {
+    // you can handle the error here
+  }
+}
+
+run();

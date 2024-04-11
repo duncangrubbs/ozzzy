@@ -18,7 +18,7 @@ function hydrator(key: string, value: any) {
  * @returns Call to next middleware handler
  */
 export function hydrateDates(data: object, next: any): Promise<any> {
-  console.log('here in the date middleware');
+  console.log('[date middleware]');
   const dataAsString = JSON.stringify(data);
   const hydratedData = JSON.parse(dataAsString, hydrator);
 

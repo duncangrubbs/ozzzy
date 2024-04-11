@@ -1,10 +1,8 @@
-const fetch = require('node-fetch');
+import RestMethods from "../enums/RestMethods";
+import { Middleware } from "../types/Middleware";
+import Auth from "./Auth";
 
-import RestMethods from '../enums/RestMethods';
-import Auth from './Auth';
-import { Middleware } from '../types/Middleware';
-
-class Api<T> {
+class Api {
   baseUrl: string;
   auth: Auth;
   headers: Array<Array<string>> = [];
@@ -31,6 +29,25 @@ class Api<T> {
   }
 
   /**
+   * Builds a URL with query params using the native platform
+   * URLSearchParams constructor
+   *
+   * Example: ('/abc/1', { name: 'John', age: '12' }) => 'BASE_URL/abc/1?name=John&age=12'
+   * @param url Endpoint path
+   * @param params Optional URL params that you want to be appended to the endpoint
+   * @returns The endpoint path with the query params appended
+   */
+  buildUrl(url: string, params: Record<string, string> = {}): URL {
+    const urlObject = new URL(url, this.baseUrl);
+
+    for (const param in params) {
+      urlObject.searchParams.append(param, params[param]);
+    }
+
+    return urlObject;
+  }
+
+  /**
    * Adds a middleware to be applied at the service level, class instance
    * @param middleware Middleware function you want to apply at the
    * service level
@@ -46,10 +63,10 @@ class Api<T> {
    * @param middleware Optional middleware functions to be applied to the response data
    * @returns Response data from the request
    */
-  get(url: string, ...middleware: Middleware<any, any>[]): Promise<T> {
+  get<K = any>(url: URL, ...middleware: Middleware<any, any>[]): Promise<K> {
     this.middleware.push(...middleware);
     const options = { method: RestMethods.GET };
-    return this.fetch(url, options);
+    return this.fetch<K>(url, options);
   }
 
   /**
@@ -60,17 +77,17 @@ class Api<T> {
    * @param middleware Optional middleware functions to be applied to the response data
    * @returns Response data from the request
    */
-  put(
-    url: string,
+  put<K = any>(
+    url: URL,
     payload: any,
     ...middleware: Middleware<any, any>[]
-  ): Promise<T> {
+  ): Promise<K> {
     this.middleware.push(...middleware);
     const options = {
       body: JSON.stringify(payload),
       method: RestMethods.PUT,
     };
-    return this.fetch(url, options);
+    return this.fetch<K>(url, options);
   }
 
   /**
@@ -81,17 +98,17 @@ class Api<T> {
    * @param middleware Optional middleware functions to be applied to the response data
    * @returns Response data from the request
    */
-  post(
-    url: string,
+  post<K = any>(
+    url: URL,
     payload: any,
     ...middleware: Middleware<any, any>[]
-  ): Promise<T> {
+  ): Promise<K> {
     this.middleware.push(...middleware);
     const options = {
       body: JSON.stringify(payload),
       method: RestMethods.POST,
     };
-    return this.fetch(url, options);
+    return this.fetch<K>(url, options);
   }
 
   /**
@@ -102,17 +119,17 @@ class Api<T> {
    * @param middleware Optional middleware functions to be applied to the response data
    * @returns Response data from the request
    */
-  delete(
-    url: string,
+  delete<K = any>(
+    url: URL,
     payload: any,
     ...middleware: Middleware<any, any>[]
-  ): Promise<T> {
+  ): Promise<K> {
     this.middleware.push(...middleware);
     const options = {
       body: JSON.stringify(payload),
       method: RestMethods.DELETE,
     };
-    return this.fetch(url, options);
+    return this.fetch<K>(url, options);
   }
 
   /**
@@ -121,7 +138,7 @@ class Api<T> {
    * @param data Data object to apply the middleware to
    * @returns Data that has gone through all middleware functions
    */
-  private applyMiddleware(data: Response): Promise<T> {
+  private _applyMiddleware<K>(data: Response): Promise<K> {
     let index = 0;
     const nextHandler = (newData: any) => {
       index++;
@@ -141,13 +158,13 @@ class Api<T> {
    * supported REST methods in this class
    * @returns Response data, after all the middleware has been applied
    */
-  private fetch(url: string, options: any): Promise<T> {
-    const combinedHeaders = this.headers.push(...this.auth.getHeaders());
-    return fetch(`${this.baseUrl}${url}`, {
+  private fetch<K>(url: URL, options: any): Promise<K> {
+    const combinedHeaders = [...this.headers, ...this.auth.getHeaders()];
+    return fetch(url, {
       headers: combinedHeaders,
       ...options,
     })
-      .then((response: Response) => this.applyMiddleware(response))
+      .then((response: Response) => this._applyMiddleware<K>(response))
       .catch((error: any) => Promise.reject(error));
   }
 }
