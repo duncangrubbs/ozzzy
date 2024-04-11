@@ -1,4 +1,4 @@
-import AuthTypes from '../shared-types/auth-types.enum'
+import AuthTypes from '../shared-types/auth-types.enum.js'
 
 class Auth {
   type?: AuthTypes

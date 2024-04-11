@@ -1,13 +1,18 @@
-import { hydrateDates, checkStatus, logger, toJson } from './middleware/index'
-import { Middleware } from './shared-types/middleware.type'
-import Api from './lib/api.service'
-import Auth from './lib/auth.service'
-import AuthTypes from './shared-types/auth-types.enum'
-import RestMethods from './shared-types/rest-methods.enum'
-import { logger as loggerUtil } from './utils/logger'
+import {
+  hydrateDates,
+  checkStatus,
+  logger,
+  toJson,
+} from './middleware/index.js'
+import { Middleware } from './shared-types/middleware.type.js'
+import Api from './lib/api.service.js'
+import Auth from './lib/auth.service.js'
+import AuthTypes from './shared-types/auth-types.enum.js'
+import RestMethods from './shared-types/rest-methods.enum.js'
+import { logger as loggerUtil } from './utils/logger.js'
 
 export {
-  Api as ozzy,
+  Api,
   Auth,
   RestMethods,
   type Middleware,

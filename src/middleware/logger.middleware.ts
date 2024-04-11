@@ -1,4 +1,4 @@
-import { logger as loggerUtil } from '../utils/logger'
+import { logger as loggerUtil } from '../utils/logger.js'
 
 /**
  * Logs basic response information

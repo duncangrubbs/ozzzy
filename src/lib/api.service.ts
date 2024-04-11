@@ -1,7 +1,7 @@
-import RestMethods from '../shared-types/rest-methods.enum'
-import { Middleware } from '../shared-types/middleware.type'
-import { logger } from '../utils/logger'
-import Auth from './auth.service'
+import RestMethods from '../shared-types/rest-methods.enum.js'
+import { Middleware } from '../shared-types/middleware.type.js'
+import { logger } from '../utils/logger.js'
+import Auth from './auth.service.js'
 
 class Api {
   baseUrl: string

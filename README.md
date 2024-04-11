@@ -1,10 +1,10 @@
 [![Unit Tests](https://github.com/duncangrubbs/ozzy/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/duncangrubbs/ozzy/actions/workflows/main.yml)
 
-# 🦘 ozzy
+# 🦘 ozzzy
 
 > A small, easy to compose, API interface
 
-Ozzy is a interface for interacting with APIs from a Javascript/Typescript client. It is essentially a stripped down version of axios with the inclusion of a middleware feature similar to [Express](https://expressjs.com/) middleware and [axios interceptors](https://axios-http.com/docs/interceptors). It was originally inspired by this [blog post](https://duncangrubbs.com/blog/1) but has since been updated after more learning on my end. In fact, I recently wrote a new blog post about one of my favorite [uses of middleware](https://duncangrubbs.com/blog/2).
+Ozzzy is a interface for interacting with APIs from a Javascript/Typescript client. It is essentially a stripped down version of axios with the inclusion of a middleware feature similar to [Express](https://expressjs.com/) middleware and [axios interceptors](https://axios-http.com/docs/interceptors). It was originally inspired by this [blog post](https://duncangrubbs.com/blog/1) but has since been updated after more learning on my end. In fact, I recently wrote a new blog post about one of my favorite [uses of middleware](https://duncangrubbs.com/blog/2).
 
 ## 🤝 Design Principles
 
@@ -17,19 +17,19 @@ Ozzy is a interface for interacting with APIs from a Javascript/Typescript clien
 
 ### REST Methods
 
-Ozzy is similar to [axios](https://axios-http.com/docs/intro) in that is provides a core set of functions for making HTTP requests. You start by constructing an `Api` for a specific backend service that your client needs to interact with.
+Ozzzy is similar to [axios](https://axios-http.com/docs/intro) in that is provides a core set of functions for making HTTP requests. You start by constructing an `Api` for a specific backend service that your client needs to interact with.
 
 ```typescript
-const userService = new Api(baseUrl, authService, ...middleware);
+const userService = new Api(baseUrl, authService, ...middleware)
 ```
 
 You provide the constructor with a `baseUrl`, an authentication service, and an optional collection of middleware functions. If you are writing Typescript, you can also type the API response that will be returned by all API requests. This type can be overridden at the request level though. This service now has a similar API to axios ... for example you can do something like
 
 ```typescript
 try {
-  const userResponse = await userService.get<ResponseType>("/region/europe");
+  const userResponse = await userService.get<ResponseType>('/region/europe')
 } catch (error) {
-  console.error(error);
+  console.error(error)
 }
 ```
 
@@ -44,7 +44,7 @@ Api.delete<T>(url: string, payload: any, ...middleware: any): Promise<T>;
 
 ### Auth
 
-Ozzy supports basic auth out of the box. You can configure your auth at the service level by injecting the class into the `Api` constructor. To setup auth for the service, you build an `Auth` object.
+Ozzzy supports basic auth out of the box. You can configure your auth at the service level by injecting the class into the `Api` constructor. To setup auth for the service, you build an `Auth` object.
 
 ```typescript
 const auth = new Auth(AuthTypes.Bearer, userToken, 'Authorization')
@@ -60,38 +60,38 @@ Authorization: Bearer YOUR_TOKEN
 
 ### Middleware
 
-At the core of Ozzy is the concept of middleware. This can be applied at the service level or the request level. Middleware intercepts the `Response` object, does something to it, and then passes it to the next middleware. It is important to keep in mind that order matters.
+At the core of Ozzzy is the concept of middleware. This can be applied at the service level or the request level. Middleware intercepts the `Response` object, does something to it, and then passes it to the next middleware. It is important to keep in mind that order matters.
 
 ```typescript
 const middlewareOne = (data, next) => {
   // do something to the response data
   // of all requests made with this service
-  return next(data);
-};
+  return next(data)
+}
 
-const myService = new Api(baseUrl, new Auth(), middlewareOne);
+const myService = new Api(baseUrl, new Auth(), middlewareOne)
 
 const middlewareTwo = (data, next) => {
   // do something to the response data that is
   // specific to this request
-  return next(data);
-};
+  return next(data)
+}
 
-const data = await myService.get("/api/foo/bar", middlewareTwo);
+const data = await myService.get('/api/foo/bar', middlewareTwo)
 ```
 
 For those of you who have written a lot of Javascript, you are probably familiar with writing something like this
 
 ```javascript
-fetch("https://some-url", headers, ...options)
+fetch('https://some-url', headers, ...options)
   // check the response status code
   .then((response) => checkStatus(response))
   // parse as json
-  .then((response) => response.json());
+  .then((response) => response.json())
 // finally return the response
 ```
 
-With Ozzy, you can write a middleware function once, and then apply it at the service level or request level. Out of convenience, ozzy comes with a few middlewares out of the box. Of course it is your choice if you want to apply these middlewares, but they are already written so that you do not have write them yourself. These include a middleware to parse the response as JSON, a basic logger, and a middleware to check the status code of the response and reject the promise if the `Response.ok` field is `false`.
+With Ozzzy, you can write a middleware function once, and then apply it at the service level or request level. Out of convenience, ozzzy comes with a few middlewares out of the box. Of course it is your choice if you want to apply these middlewares, but they are already written so that you do not have write them yourself. These include a middleware to parse the response as JSON, a basic logger, and a middleware to check the status code of the response and reject the promise if the `Response.ok` field is `false`.
 
 ## Testing Locally
 

@@ -1,12 +1,12 @@
 import {
-  ozzy,
+  Api,
   Auth,
   hydrateDates,
   checkStatus,
   toJson,
   logger,
   loggerUtil,
-} from '../index'
+} from '../index.js'
 
 const baseUrl = 'https://jsonplaceholder.typicode.com'
 
@@ -17,7 +17,7 @@ type ApiResponse = {
   completed: boolean
 }
 
-const api = new ozzy(
+const api = new Api(
   baseUrl,
   new Auth(),
   [],
