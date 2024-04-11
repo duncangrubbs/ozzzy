@@ -1,4 +1,4 @@
-![CI](https://github.com/duncangrubbs/ozzy/workflows/CI/badge.svg?event=push)
+[![Unit Tests](https://github.com/duncangrubbs/ozzy/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/duncangrubbs/ozzy/actions/workflows/main.yml)
 
 # 🦘 ozzy
 
