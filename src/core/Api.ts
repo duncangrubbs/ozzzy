@@ -1,5 +1,3 @@
-const fetch = require("node-fetch");
-
 import RestMethods from "../enums/RestMethods";
 import { Middleware } from "../types/Middleware";
 import Auth from "./Auth";
