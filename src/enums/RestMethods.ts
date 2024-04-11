@@ -5,4 +5,4 @@ enum RestMethods {
   DELETE = 'DELETE',
 }
 
-export default RestMethods;
+export default RestMethods

@@ -83,7 +83,7 @@ const data = await myService.get("/api/foo/bar", middlewareTwo);
 For those of you who have written a lot of Javascript, you are probably familiar with writing something like this
 
 ```javascript
-fetch("some url", headers, ...options)
+fetch("https://some-url", headers, ...options)
   // check the response status code
   .then((response) => checkStatus(response))
   // parse as json
@@ -92,6 +92,10 @@ fetch("some url", headers, ...options)
 ```
 
 With Ozzy, you can write a middleware function once, and then apply it at the service level or request level. Out of convenience, ozzy comes with a few middlewares out of the box. Of course it is your choice if you want to apply these middlewares, but they are already written so that you do not have write them yourself. These include a middleware to parse the response as JSON, a basic logger, and a middleware to check the status code of the response and reject the promise if the `Response.ok` field is `false`.
+
+## Testing Locally
+
+If you are interesting in running the example file locally, you can simply run `npm i` and then `npm run example`. This example hit the sample JSON API and applies a variety of middlewares.
 
 ## 🙌 Contributing
 

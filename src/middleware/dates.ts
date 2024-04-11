@@ -1,13 +1,13 @@
 // regex that matches patterns from
 // JSON.stringify(new Date())
-const dateFormat = /^-?\d+-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/;
+const dateFormat = /^-?\d+-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/
 
 function hydrator(key: string, value: any) {
   if (typeof value === 'string' && dateFormat.test(value)) {
-    return new Date(value);
+    return new Date(value)
   }
 
-  return value;
+  return value
 }
 
 /**
@@ -17,10 +17,9 @@ function hydrator(key: string, value: any) {
  * @param next Next middleware handler function
  * @returns Call to next middleware handler
  */
-export function hydrateDates(data: object, next: any): Promise<any> {
-  console.log('[date middleware]');
-  const dataAsString = JSON.stringify(data);
-  const hydratedData = JSON.parse(dataAsString, hydrator);
+export function hydrateDates(data: object): Promise<any> {
+  const dataAsString = JSON.stringify(data)
+  const hydratedData = JSON.parse(dataAsString, hydrator)
 
-  return next(hydratedData);
+  return hydratedData
 }

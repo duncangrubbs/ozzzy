@@ -4,16 +4,15 @@
  * @returns Call to next middleware handler
  * @throws Error if response is not ok
  */
-export function checkStatus(response: Response, next: any): Promise<any> {
-  console.log("[error middleware]", response.ok);
-  if (!response.ok) {
-    return (
-      response
-        .json()
-        // you could catch this somewhere else and handle it how you like
-        .then((result: any) => Promise.reject(result.error))
-    );
+export async function checkStatus(response: Response): Promise<any> {
+  if (response.ok) {
+    return response
   }
 
-  return next(response);
+  try {
+    const result = await response.json()
+    throw Error(result.error)
+  } catch {
+    throw Error(response.statusText)
+  }
 }
