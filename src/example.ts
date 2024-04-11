@@ -1,8 +1,8 @@
-import { checkStatus } from './middleware/error-handler'
-import { toJson } from './middleware/json'
-import { logger } from './middleware/logger'
+import { checkStatus } from './middleware/error-handler.middleware'
+import { toJson } from './middleware/json.middleware'
+import { logger } from './middleware/logger.middleware'
 import { logger as loggerUtil } from './utils/logger'
-import { Api, Auth, hydrateDates } from './ozzy'
+import { ozzy, Auth, hydrateDates } from './ozzy'
 
 const baseUrl = 'https://jsonplaceholder.typicode.com'
 
@@ -13,7 +13,7 @@ type ApiResponse = {
   completed: boolean
 }
 
-const api = new Api(
+const api = new ozzy(
   baseUrl,
   new Auth(),
   [],

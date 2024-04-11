@@ -1,7 +1,7 @@
-import RestMethods from '../enums/RestMethods'
-import { Middleware } from '../types/Middleware'
+import RestMethods from '../shared-types/rest-methods.enum'
+import { Middleware } from '../shared-types/middleware.type'
 import { logger } from '../utils/logger'
-import Auth from './Auth'
+import Auth from './auth.service'
 
 class Api {
   baseUrl: string
@@ -10,7 +10,7 @@ class Api {
   middleware: Middleware<any, any>[]
 
   /**
-   * Constructs an instance of the Api class
+   * Constructs an instance of the ozzy api class
    * @param baseUrl URL that is prepended to every call made to this service
    * @param auth Instance of Auth that will be applied to requests made with this
    * service

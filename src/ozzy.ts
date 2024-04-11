@@ -1,8 +1,8 @@
-import { hydrateDates } from './middleware/dates'
-import { Middleware } from './types/Middleware'
-import Api from './core/Api'
-import Auth from './core/Auth'
-import AuthTypes from './enums/AuthTypes'
-import RestMethods from './enums/RestMethods'
+import { hydrateDates } from './middleware/dates.middleware'
+import { Middleware } from './shared-types/middleware.type'
+import Api from './lib/api.service'
+import Auth from './lib/auth.service'
+import AuthTypes from './shared-types/auth-types.enum'
+import RestMethods from './shared-types/rest-methods.enum'
 
-export { Api, Auth, Middleware, RestMethods, AuthTypes, hydrateDates }
+export { Api as ozzy, Auth, Middleware, RestMethods, AuthTypes, hydrateDates }
