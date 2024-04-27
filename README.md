@@ -2,14 +2,14 @@
 
 # 🦘 ozzzy
 
-> A small, easy to compose, API interface
+> A small, easy to compose, HTTP API interface
 
-Ozzzy is a interface for interacting with APIs from a Javascript/Typescript client. It is essentially a stripped down version of axios with the inclusion of a middleware feature similar to [Express](https://expressjs.com/) middleware and [axios interceptors](https://axios-http.com/docs/interceptors). It was originally inspired by this [blog post](https://duncangrubbs.com/blog/1) but has since been updated after more learning on my end. In fact, I recently wrote a new blog post about one of my favorite [uses of middleware](https://duncangrubbs.com/blog/2).
+Ozzzy is a interface for interacting with HTTP APIs from Javascript clients. It is essentially a stripped down version of [axios](https://axios-http.com) with the inclusion of a middleware feature similar to [Express](https://expressjs.com/) middleware and [axios interceptors](https://axios-http.com/docs/interceptors).
 
 ## 🤝 Design Principles
 
-1. Lightweight
-2. Easy to Use
+1. Simple
+2. Configurable
 3. Zero Dependencies
 4. Framework Agnostic
 
@@ -17,13 +17,17 @@ Ozzzy is a interface for interacting with APIs from a Javascript/Typescript clie
 
 ### REST Methods
 
-Ozzzy is similar to [axios](https://axios-http.com/docs/intro) in that is provides a core set of functions for making HTTP requests. You start by constructing an `Api` for a specific backend service that your client needs to interact with.
+Ozzzy is similar to [axios](https://axios-http.com/docs/intro) in that is provides a core set of functions for making HTTP requests. You start by constructing an `Api` for a specific backend service that your client needs to interact with. For example
 
 ```typescript
-const userService = new Api(baseUrl, authService, ...middleware)
+import { Api } from 'ozzzy'
+
+const userService = new Api('/api/v1/users')
 ```
 
-You provide the constructor with a `baseUrl`, an authentication service, and an optional collection of middleware functions. If you are writing Typescript, you can also type the API response that will be returned by all API requests. This type can be overridden at the request level though. This service now has a similar API to axios ... for example you can do something like
+All the arguments to the constructor are optional, but you can provide a base URL if HTTP requests made with this service have one in common. You can also optionally pass a AuthProvider implementation, a set of shared headers, and a set of middleware functions.
+
+This service now has a similar API to axios. For example to make a `GET` request
 
 ```typescript
 try {
@@ -33,26 +37,29 @@ try {
 }
 ```
 
-Under the hood this builds the request headers and options, sends the fetch request, applies all of your middleware functions and returns you the final result. Ozzy support all common REST methods
+Under the hood this builds the request headers and options, sends the fetch request, applies all of your middleware functions to the response and returns you the final result. Ozzzy supports `GET`, `PUT`, `POST`, and `DELETE`. For REST requests that support a body payload, you can pass any JSON serializable object as part of the request. For example
 
 ```typescript
-Api.get<T>(url: string, ...middleware: any): Promise<T>;
-Api.put<T>(url: string, payload: any, ...middleware: any): Promise<T>;
-Api.post<T>(url: string, payload: any, ...middleware: any): Promise<T>;
-Api.delete<T>(url: string, payload: any, ...middleware: any): Promise<T>;
+try {
+  const newUser = await userService.post<User>('/users/new', { name: 'Jane' })
+} catch (error) {
+  console.error(error)
+}
 ```
 
 ### Auth
 
-Ozzzy supports basic auth out of the box. You can configure your auth at the service level by injecting the class into the `Api` constructor. To setup auth for the service, you build an `Auth` object.
+To send an authorization HTTP header, you could simply build the header adn pass it to the `Api` constructor. That being said, it's recommended to either use the `OzzzyAuth` provider, or write your own provider that implements the `AuthProvider` interface. This way, different instances of `Api` can share the same `AuthProvider` instance. If you use `OzzzyAuth`, it supports a few basic auth schemes out of the box like `Bearer` and `Basic`. To use an `AuthProvider` instance, pass it to the constructor like so
 
 ```typescript
-const auth = new Auth(AuthTypes.Bearer, userToken, 'Authorization')
+import { OzzzyAuth } from 'ozzzy'
 
-const service = new Api(url, auth...)
+const auth = new OzzzyAuth(AuthTypes.Bearer, userToken, 'Authorization')
+
+const service = new Api('/api/v1', auth)
 ```
 
-This code configures the service to send the provided token in the `Authorization` header. The `AuthType` determines the format of this header. In the case the header would look like
+This code configures the service to send the provided token in the `Authorization` header. The `AuthType` determines the format of this header. In this case the header would look like
 
 ```
 Authorization: Bearer YOUR_TOKEN
@@ -63,21 +70,21 @@ Authorization: Bearer YOUR_TOKEN
 At the core of Ozzzy is the concept of middleware. This can be applied at the service level or the request level. Middleware intercepts the `Response` object, does something to it, and then passes it to the next middleware. It is important to keep in mind that order matters.
 
 ```typescript
-const middlewareOne = (data, next) => {
+const middlewareOne = (data) => {
   // do something to the response data
   // of all requests made with this service
-  return next(data)
+  return data
 }
 
-const myService = new Api(baseUrl, new Auth(), middlewareOne)
+const myService = new Api('/api/v1', undefined, [], middlewareOne)
 
-const middlewareTwo = (data, next) => {
+const middlewareTwo = (data) => {
   // do something to the response data that is
   // specific to this request
-  return next(data)
+  return data
 }
 
-const data = await myService.get('/api/foo/bar', middlewareTwo)
+const data = await myService.get('/foo/bar', middlewareTwo)
 ```
 
 For those of you who have written a lot of Javascript, you are probably familiar with writing something like this

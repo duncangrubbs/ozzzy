@@ -19,7 +19,7 @@ type ApiResponse = {
 
 const api = new Api(
   baseUrl,
-  new Auth(),
+  undefined,
   [],
 
   /*

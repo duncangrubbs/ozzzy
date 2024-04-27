@@ -1,7 +1,7 @@
 {
   "name": "ozzzy",
   "version": "0.2.0",
-  "description": "A lightweight API interface",
+  "description": "A small, easy to compose, HTTP API interface",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
