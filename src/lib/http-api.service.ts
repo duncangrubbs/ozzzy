@@ -1,16 +1,16 @@
-import RestMethods from '../shared-types/rest-methods.enum.js'
+import { RestMethods } from '../shared-types/rest-methods.enum.js'
 import { Middleware } from '../shared-types/middleware.type.js'
 import { logger } from '../utils/logger.js'
 import { AuthProvider } from '../shared-types/auth.type.js'
 
-class HttpApi {
+export class HttpApi {
   baseUrl: string
   auth?: AuthProvider
   headers: Array<Array<string>> = []
   middleware: Middleware<any, any>[]
 
   /**
-   * Constructs a Api service instance
+   * Constructs an HttApi service instance
    * @param baseUrl URL that is prepended to every call made to this service
    * @param auth Optionally provide an instance of an AuthProvider that will be
    * used to set auth-related headers on every request made with this service
@@ -190,5 +190,3 @@ class HttpApi {
     }
   }
 }
-
-export default HttpApi

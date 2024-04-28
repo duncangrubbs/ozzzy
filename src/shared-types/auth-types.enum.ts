@@ -1,5 +1,3 @@
-enum AuthTypes {
+export enum AuthTypes {
   Bearer = 'Bearer',
 }
-
-export default AuthTypes

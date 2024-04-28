@@ -1,6 +1,5 @@
 import {
   Api,
-  Auth,
   hydrateDates,
   checkStatus,
   toJson,
