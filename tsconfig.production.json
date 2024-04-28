@@ -15,5 +15,5 @@
     "strictBindCallApply": true,
     "forceConsistentCasingInFileNames": true
   },
-  "exclude": ["src/examples/**"]
+  "exclude": ["src/examples/**", "test/**"]
 }
