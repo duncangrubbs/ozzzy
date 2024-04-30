@@ -1,1 +1,1 @@
-export type Middleware<K, V> = (data: K) => Promise<V>
+export type Middleware<K = unknown, V = unknown> = (data: K) => Promise<V>

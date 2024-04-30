@@ -1,3 +1,3 @@
 export interface AuthProvider {
-  getHeaders(): Array<Array<string>>
+  getHeaders(): [string, string][]
 }

@@ -6,11 +6,11 @@ import { AuthProvider } from '../shared-types/auth.type.js'
 export class HttpApi {
   baseUrl: string
   auth?: AuthProvider
-  headers: Array<Array<string>> = []
-  middleware: Middleware<any, any>[]
+  headers: [string, string][] = []
+  middleware: Middleware[]
 
   /**
-   * Constructs an HttApi service instance
+   * Constructs an HttpApi service instance
    * @param baseUrl URL that is prepended to every call made to this service
    * @param auth Optionally provide an instance of an AuthProvider that will be
    * used to set auth-related headers on every request made with this service
@@ -23,8 +23,8 @@ export class HttpApi {
   constructor(
     baseUrl: string = '',
     auth?: AuthProvider,
-    headers: Array<Array<string>> = [],
-    ...middleware: Middleware<any, any>[]
+    headers: [string, string][] = [],
+    ...middleware: Middleware[]
   ) {
     this.middleware = middleware
     this.baseUrl = baseUrl
@@ -57,7 +57,7 @@ export class HttpApi {
    * @param middleware Middleware function you want to apply at the
    * service level
    */
-  use(middleware: Middleware<any, any>): void {
+  use(middleware: Middleware): void {
     this.middleware.push(middleware)
   }
 
@@ -70,7 +70,7 @@ export class HttpApi {
    */
   get<K = unknown>(
     url: URL,
-    ...middleware: Middleware<any, any>[]
+    ...middleware: Middleware<K, unknown>[]
   ): Promise<K> {
     const requestMiddleware = [...this.middleware, ...middleware]
     const options = { method: RestMethods.GET }
@@ -87,8 +87,8 @@ export class HttpApi {
    */
   put<K = unknown>(
     url: URL,
-    payload: any,
-    ...middleware: Middleware<any, any>[]
+    payload: object,
+    ...middleware: Middleware<K, unknown>[]
   ): Promise<K> {
     const requestMiddleware = [...this.middleware, ...middleware]
     const options = {
@@ -108,8 +108,8 @@ export class HttpApi {
    */
   post<K = unknown>(
     url: URL,
-    payload: any,
-    ...middleware: Middleware<any, any>[]
+    payload: object,
+    ...middleware: Middleware<K, unknown>[]
   ): Promise<K> {
     const requestMiddleware = [...this.middleware, ...middleware]
     const options = {
@@ -129,8 +129,8 @@ export class HttpApi {
    */
   delete<K = unknown>(
     url: URL,
-    payload: any,
-    ...middleware: Middleware<any, any>[]
+    payload: object,
+    ...middleware: Middleware<K, unknown>[]
   ): Promise<K> {
     const requestMiddleware = [...this.middleware, ...middleware]
     const options = {
@@ -148,12 +148,12 @@ export class HttpApi {
    */
   private async _applyMiddleware<K>(
     response: Response,
-    middleware: Middleware<any, any>[],
+    middleware: Middleware<K, unknown>[],
   ): Promise<K> {
-    let currentData = response
+    let currentData: Response | unknown = response
 
     for (let index = 0; index < middleware.length; index += 1) {
-      currentData = await middleware[index](currentData)
+      currentData = await middleware[index](currentData as K)
       logger.debug('applied middleware:', middleware[index].name)
     }
 
@@ -170,8 +170,8 @@ export class HttpApi {
    */
   private async _fetch<K>(
     url: URL,
-    options: any,
-    middleware: Middleware<any, any>[],
+    options: object,
+    middleware: Middleware<K, unknown>[],
   ): Promise<K> {
     let combinedHeaders = [...this.headers]
     if (this.auth !== undefined) {
@@ -184,7 +184,7 @@ export class HttpApi {
         ...options,
       })
       return this._applyMiddleware<K>(response, middleware)
-    } catch (error: any) {
+    } catch (error: unknown) {
       logger.debug(error)
       throw error
     }

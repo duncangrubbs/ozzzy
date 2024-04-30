@@ -41,7 +41,7 @@ to Express.js
 api.use(toJson)
 api.use(hydrateDates)
 
-function sampleMiddleware(data: any) {
+function sampleMiddleware(data: ApiResponse) {
   return data
 }
 

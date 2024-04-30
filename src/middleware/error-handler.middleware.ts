@@ -4,7 +4,7 @@
  * @returns Call to next middleware handler
  * @throws Error if response is not ok
  */
-export async function checkStatus(response: Response): Promise<any> {
+export async function handleErrors(response: Response): Promise<Response> {
   if (response.ok) {
     return response
   }

@@ -1,4 +1,4 @@
-[![Unit Tests](https://github.com/duncangrubbs/ozzy/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/duncangrubbs/ozzy/actions/workflows/main.yml)
+[![Tests](https://github.com/duncangrubbs/ozzy/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/duncangrubbs/ozzy/actions/workflows/main.yml)
 
 # 🦘 ozzzy
 
