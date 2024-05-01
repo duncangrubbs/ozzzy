@@ -1,7 +1,7 @@
 import { AuthTypes } from '../shared-types/auth-types.enum.js'
 import { AuthProvider } from '../shared-types/auth.type.js'
 
-class OzzzyAuth implements AuthProvider {
+export class OzzzyAuth implements AuthProvider {
   type: AuthTypes
   token: string
   header: string
@@ -21,5 +21,3 @@ class OzzzyAuth implements AuthProvider {
     }
   }
 }
-
-export default OzzzyAuth
