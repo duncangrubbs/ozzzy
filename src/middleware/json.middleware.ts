@@ -6,6 +6,6 @@
  * @param next Next middleware handler function
  * @returns Call to next middleware handler
  */
-export function toJson(response: Response): Promise<any> {
+export function toJson(response: Response): Promise<object> {
   return response.json()
 }

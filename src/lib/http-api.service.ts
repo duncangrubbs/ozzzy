@@ -68,10 +68,7 @@ export class HttpApi {
    * @returns The response, after all middleware has been applied
    * @example await api.get('/users/all')
    */
-  get<K = unknown>(
-    url: URL,
-    ...middleware: Middleware<K, unknown>[]
-  ): Promise<K> {
+  get<K = unknown>(url: URL, ...middleware: Middleware[]): Promise<K> {
     const requestMiddleware = [...this.middleware, ...middleware]
     const options = { method: RestMethods.GET }
     return this._fetch<K>(url, options, requestMiddleware)
@@ -88,7 +85,7 @@ export class HttpApi {
   put<K = unknown>(
     url: URL,
     payload: object,
-    ...middleware: Middleware<K, unknown>[]
+    ...middleware: Middleware[]
   ): Promise<K> {
     const requestMiddleware = [...this.middleware, ...middleware]
     const options = {
@@ -109,7 +106,7 @@ export class HttpApi {
   post<K = unknown>(
     url: URL,
     payload: object,
-    ...middleware: Middleware<K, unknown>[]
+    ...middleware: Middleware[]
   ): Promise<K> {
     const requestMiddleware = [...this.middleware, ...middleware]
     const options = {
@@ -130,7 +127,7 @@ export class HttpApi {
   delete<K = unknown>(
     url: URL,
     payload: object,
-    ...middleware: Middleware<K, unknown>[]
+    ...middleware: Middleware[]
   ): Promise<K> {
     const requestMiddleware = [...this.middleware, ...middleware]
     const options = {
@@ -171,7 +168,7 @@ export class HttpApi {
   private async _fetch<K>(
     url: URL,
     options: object,
-    middleware: Middleware<K, unknown>[],
+    middleware: Middleware[],
   ): Promise<K> {
     let combinedHeaders = [...this.headers]
     if (this.auth !== undefined) {

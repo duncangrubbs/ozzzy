@@ -12,7 +12,7 @@ class OzzzyAuth implements AuthProvider {
     this.header = header
   }
 
-  getHeaders(): Array<Array<string>> {
+  getHeaders(): [string, string][] {
     switch (this.type) {
       case AuthTypes.Bearer:
         return [[this.header!, `${this.type} ${this.token}`]]

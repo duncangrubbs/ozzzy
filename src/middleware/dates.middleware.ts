@@ -15,7 +15,7 @@ const dateFormat = /^-?\d+-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/
  * If there is a match, it returns the value as a date,
  * if not, it returns the value as is
  */
-function dateReviver(_key: string, value: any) {
+function dateReviver(_key: string, value: unknown) {
   if (typeof value === 'string' && dateFormat.test(value)) {
     return new Date(value)
   }
@@ -29,7 +29,7 @@ function dateReviver(_key: string, value: any) {
  * Note that this data is expected to be a Javascript object
  * @returns Hydrated data object
  */
-export function hydrateDates(data: object): Promise<any> {
+export function hydrateDates(data: object): Promise<object> {
   const dataAsString = JSON.stringify(data)
   const hydratedData = JSON.parse(dataAsString, dateReviver)
 
