@@ -1,7 +1,7 @@
 import {
-  Api,
+  HttpApi,
   hydrateDates,
-  checkStatus,
+  handleErrors,
   toJson,
   logger,
   loggerUtil,
@@ -16,7 +16,7 @@ type ApiResponse = {
   completed: boolean
 }
 
-const api = new Api(
+const api = new HttpApi(
   baseUrl,
   undefined,
   [],
@@ -25,7 +25,7 @@ const api = new Api(
   You can apply your middleware here.
   */
   logger,
-  checkStatus,
+  handleErrors,
 )
 
 /**
@@ -59,7 +59,7 @@ async function run() {
 
   loggerUtil.debug('request 2')
   try {
-    await api.get(api.buildUrl('/todos/sadfsf'), sampleMiddleware)
+    await api.get(api.buildUrl('/todos/sadfsf'))
   } catch (error) {
     console.error(error)
   }

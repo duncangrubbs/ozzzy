@@ -1,6 +1,6 @@
 import {
   hydrateDates,
-  checkStatus,
+  handleErrors,
   logger,
   toJson,
 } from './middleware/index.js'
@@ -12,13 +12,13 @@ import { RestMethods } from './shared-types/rest-methods.enum.js'
 import { logger as loggerUtil } from './utils/logger.js'
 
 export {
-  HttpApi as Api,
+  HttpApi,
   Auth,
   RestMethods,
   type Middleware,
   AuthTypes,
   hydrateDates,
-  checkStatus,
+  handleErrors,
   logger,
   toJson,
   loggerUtil,
