@@ -1,4 +1,4 @@
-[![Tests](https://github.com/duncangrubbs/ozzy/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/duncangrubbs/ozzy/actions/workflows/main.yml)
+[![Test](https://github.com/duncangrubbs/ozzzy/actions/workflows/test.yml/badge.svg)](https://github.com/duncangrubbs/ozzzy/actions/workflows/test.yml)
 
 # 🦘 ozzzy
 
