@@ -6,7 +6,6 @@
  * @param next Next middleware handler function
  * @returns Call to next middleware handler
  */
-export function toJson(response: Response, next: any): Promise<any> {
-  console.log('[json middleware]');
-  return response.json().then((result: any) => next(result));
+export function toJson(response: Response): Promise<object> {
+  return response.json()
 }
