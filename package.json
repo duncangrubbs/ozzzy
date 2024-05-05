@@ -12,7 +12,7 @@
     "package.json"
   ],
   "repository": {
-    "url": "git+https://github.com/duncangrubbs/ozzy.git"
+    "url": "git+https://github.com/duncangrubbs/ozzzy.git"
   },
   "author": "Duncan Grubbs <duncan.grubbs@gmail.com>",
   "license": "MIT",
